@@ -1,53 +1,48 @@
-import React, { FunctionComponent } from "react";
+import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import Router from "./Router";
 import "./App.css";
 // import getMuiTheme from "@material-ui/styles/getMuiTheme";
 import { ThemeProvider } from "@material-ui/styles";
 import createTheme from "./createTheme";
-import { createStyles, Theme, withStyles, WithStyles } from "@material-ui/core";
 
-const styles = (theme: Theme) =>
-  createStyles({
-    root: {
-      position: "absolute",
-      width: "100%",
-      height: "100%"
-    },
-    header: {
-      zIndex: theme.zIndex.appBar,
-      height: 80,
-      position: "fixed",
-      top: 0,
-      left: 0,
-      right: 0
-    },
-    contentAndFooter: {
-      marginTop: 80,
-      height: "calc(100% - 80px)",
-      width: "100%",
-      display: "table",
-      tableLayout: "fixed"
-    },
-    content: {
-      display: "table-row",
-      height: "100%"
-    },
-    footer: {
-      display: "table-row"
-    }
-  });
-
-const App: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
+function App() {
   return (
-    <div className={classes.root}>
-      <ThemeProvider theme={createTheme()}>
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
-      </ThemeProvider>
-    </div>
+    <ThemeProvider theme={createTheme()}>
+      <BrowserRouter>
+        <div className="page-container">
+          <header className="page-header">
+            <div className="page-header__container">
+              <img
+                src="/assets/logos/coronaq.svg"
+                alt="CoronAQ"
+                className="page-header__logo-coronaq"
+              />
+              <a href="https://www.bundesgesundheitsministerium.de/">
+                <img
+                  src="/assets/logos/bmg.png"
+                  alt="Bundesministerium für Gesundheit"
+                  className="page-header__logo-bmg"
+                />
+              </a>
+            </div>
+          </header>
+          <main className="page-main">
+            <Router />
+          </main>
+          <footer className="page-footer">
+            <a href="https://wirvsvirushackathon.org/">
+              <img
+                src="https://wirvsvirushackathon.org/wp-content/uploads/2020/03/12-scaled.jpg"
+                alt="Initiiert durch WirVsVirus"
+                className="page-footer__logo-wirvsvirus"
+              />
+            </a>
+          </footer>
+        </div>
+      </BrowserRouter>
+    </ThemeProvider>
   );
-};
+}
 
-export default withStyles(styles)(App);
+export default App;
