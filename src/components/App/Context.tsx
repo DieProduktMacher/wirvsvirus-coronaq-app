@@ -7,28 +7,35 @@ import React, {
 } from "react";
 import { googleMapsGeocodeEntry } from "../models/map";
 
+const NUMBER_OF_STEPS = 5;
+
 interface State {
   address: googleMapsGeocodeEntry | null;
+  progress: number;
 }
 
 const initialState: State = {
-  address: null
+  address: null,
+  progress: 0
 };
 
 type Action =
   | { type: "setAddress"; address: googleMapsGeocodeEntry }
-  | { type: "removeAddress" };
+  | { type: "removeAddress" }
+  | { type: "setStep"; step: number };
 
 interface actions {
   setAddress: (address: googleMapsGeocodeEntry) => void;
   removeAddress: () => void;
+  setStep: (step: number) => void;
 }
 
 const Context = createContext<[State, actions]>([
   initialState,
   {
     setAddress: address => {},
-    removeAddress: () => {}
+    removeAddress: () => {},
+    setStep: step => {}
   }
 ]);
 
@@ -43,6 +50,11 @@ const reducer = (state: State, action: Action) => {
       return {
         ...state,
         address: null
+      };
+    case "setStep":
+      return {
+        ...state,
+        progress: Math.ceil((100 * action.step) / NUMBER_OF_STEPS)
       };
     default:
       return state;
@@ -62,6 +74,9 @@ export const ContextProvider: React.ComponentType = ({ children }) => {
       removeAddress: () => {
         localStorage.removeItem("address");
         dispatch({ type: "removeAddress" });
+      },
+      setStep: (step: number) => {
+        dispatch({ type: "setStep", step });
       }
     };
   }, [dispatch]);

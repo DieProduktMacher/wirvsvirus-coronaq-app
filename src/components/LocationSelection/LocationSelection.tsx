@@ -30,7 +30,12 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
 }) => {
   const [state, actions] = useContextState();
 
-  const [isSearching, setIsSearching] = useState(false);
+  useEffect(() => {
+    actions.setStep(1);
+  }, [actions]);
+
+  // const [questions, setQuestions] = useState<any>(null);
+  // const [isSearching, setIsSearching] = useState(false);
   const [addresses, setAddresses] = useState<googleMapsGeocodeResponse>([]);
   const [currentAddress, setCurrentAddress] = useState(state.address);
 

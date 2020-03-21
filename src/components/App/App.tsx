@@ -6,28 +6,15 @@ import { ThemeProvider } from "@material-ui/styles";
 import createTheme from "./createTheme";
 import { ContextProvider } from "./Context";
 
+import PageHeader from "../PageHeader/PageHeader";
+
 function App() {
   return (
     <ThemeProvider theme={createTheme()}>
       <ContextProvider>
         <BrowserRouter>
           <div className="page-container">
-            <header className="page-header">
-              <div className="page-header__container">
-                <img
-                  src="/assets/logos/coronaq.svg"
-                  alt="CoronAQ"
-                  className="page-header__logo-coronaq"
-                />
-                <a href="https://www.bundesgesundheitsministerium.de/">
-                  <img
-                    src="/assets/logos/bmg.png"
-                    alt="Bundesministerium für Gesundheit"
-                    className="page-header__logo-bmg"
-                  />
-                </a>
-              </div>
-            </header>
+            <PageHeader />
             <main className="page-main">
               <Router />
             </main>
