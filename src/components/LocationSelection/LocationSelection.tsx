@@ -66,7 +66,6 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
         if (updateState) {
           actions.setAddress(response.data.results[0]);
           setCurrentAddress(response.data.results[0]);
-          window.location.reload();
         }
       })
       .catch(error => {
