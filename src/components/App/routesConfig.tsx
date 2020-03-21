@@ -11,6 +11,7 @@ class Route {
 }
 
 const config = {
+  home: new Route("/home"),
   locationSelection: new Route("/location"),
   question: new Route("/question"),
   answer: new Route("/answer")

@@ -1,16 +1,17 @@
 import React from "react";
-import {Redirect, Route, Switch} from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import routes from "./routesConfig";
 
-import {LocationSelection} from "../LocationSelection/LocationSelection";
-import {Question} from "../Question/Question";
-import {Answer} from "../Answer/Answer";
+import { LocationSelection } from "../LocationSelection/LocationSelection";
+import { Question } from "../Question/Question";
+import { Answer } from "../Answer/Answer";
+import { Home } from "../Home/Home";
 
 const Router = () => {
   return (
     <Switch>
-      {console.log(routes.locationSelection.getPath())}
-      <Redirect exact from="/" to={routes.locationSelection.getPath()} />
+      <Redirect exact from="/" to={routes.home.getPath()} />
+      <Route path={routes.home.getPath()} component={Home} />
       <Route
         path={routes.locationSelection.getPath()}
         component={LocationSelection}

@@ -4,7 +4,8 @@ import "./index.css";
 import App from "./components/App/App";
 import * as serviceWorker from "./serviceWorker";
 
-import * as Firebase from './services/Firebase';
+import "./i18n";
+import * as Firebase from "./services/Firebase";
 
 ReactDOM.render(
   <React.StrictMode>
