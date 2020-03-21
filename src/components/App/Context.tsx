@@ -70,7 +70,7 @@ export const ContextProvider: React.ComponentType = ({ children }) => {
   useEffect(() => {
     (async () => {
       const address = localStorage.getItem("address");
-      if (address && !address === undefined) {
+      if (address && !(address === undefined)) {
         dispatch({
           type: "setAddress",
           address: JSON.parse(address)

@@ -1,4 +1,4 @@
-import { PaletteType, createStyles } from "@material-ui/core";
+import { PaletteType } from "@material-ui/core";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { PaletteOptions } from "@material-ui/core/styles/createPalette";
 import { TypographyOptions } from "@material-ui/core/styles/createTypography";

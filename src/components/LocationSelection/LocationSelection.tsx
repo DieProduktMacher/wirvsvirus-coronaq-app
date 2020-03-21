@@ -1,16 +1,10 @@
-import React, {
-  FunctionComponent,
-  useState,
-  useEffect,
-  useContext
-} from "react";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import {
   Grid,
   TextField,
   Typography,
   Button,
   createStyles,
-  Theme,
   withStyles,
   WithStyles
 } from "@material-ui/core";
@@ -20,12 +14,11 @@ import {
   googleMapsGeocodeEntry
 } from "../models/map";
 import { useHistory } from "react-router-dom";
-import { Context as FirebaseContext } from "../../services/Firebase";
 import axios, { AxiosResponse } from "axios";
 import { useTranslation } from "react-i18next";
 import { useContextState } from "../App/Context";
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     searchAddress: {
       minWidth: "300px"
@@ -35,43 +28,45 @@ const styles = (theme: Theme) =>
 const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
   classes
 }) => {
-  const firebase = useContext(FirebaseContext);
   const [state, actions] = useContextState();
 
-  const [questions, setQuestions] = useState<any>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [addresses, setAddresses] = useState<googleMapsGeocodeResponse>([]);
-  const [currentAddress] = useState(state.address);
+  const [currentAddress, setCurrentAddress] = useState(state.address);
 
   const history = useHistory();
   const { t } = useTranslation();
 
-  function nextStep() {
-    history.push("/question");
-  }
+  const getGeolocation = () => {
+    navigator.geolocation.getCurrentPosition(position => {
+      searchForAddress(
+        "latlng",
+        `${position.coords.latitude},${position.coords.longitude}`,
+        true
+      );
+    });
+  };
 
-  useEffect(() => {
-    firebase?.firestore
-      .collection("questions")
-      .where("countryCode", "==", "de")
-      .get()
-      .then((result: any) => {
-        setQuestions(result.docs.map((doc: any) => doc.data()));
-      });
-  }, [firebase]);
-  // https://www.googleapis.com/geolocation/v1/geolocate?key=YOUR_API_KEY
-
-  const searchForAddress = (address: string) => {
+  const searchForAddress = (
+    method: string,
+    address: string,
+    updateState?: boolean
+  ) => {
     if (!isSearching) {
-      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GOOGLEMAPS_API_KEY}`;
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?${method}=${address}&key=${process.env.REACT_APP_GOOGLEMAPS_API_KEY}`;
       setIsSearching(true);
-      axios
+      return axios
         .get(url)
         .then((response: AxiosResponse) => {
           setAddresses(response.data.results);
+
+          if (updateState) {
+            actions.setAddress(response.data.results[0]);
+            setCurrentAddress(response.data.results[0]);
+          }
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         })
         .then(() => setIsSearching(false));
     }
@@ -105,7 +100,9 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
                   {...params}
                   label={t("location:address_input")}
                   variant="outlined"
-                  onChange={event => searchForAddress(event.target.value)}
+                  onChange={event =>
+                    searchForAddress("address", event.target.value)
+                  }
                 />
               )}
               onChange={(event: any) =>
@@ -114,16 +111,26 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
             />
           </Grid>
           <Grid item container justify="center">
-            {t("location:geolocation")}
+            <Button color="secondary" onClick={getGeolocation}>
+              {t("location:geolocation")}
+            </Button>
           </Grid>
           <Grid item container justify="center">
             <Button
-              type="submit"
               variant="contained"
               color="primary"
-              onClick={() => nextStep()}
+              onClick={() => history.push("/question")}
             >
               {t("next")}
+            </Button>
+          </Grid>
+          <Grid item container justify="center">
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => history.push("/home")}
+            >
+              {t("back")}
             </Button>
           </Grid>
         </Grid>
