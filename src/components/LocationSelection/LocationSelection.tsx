@@ -33,6 +33,7 @@ export const LocationSelection = () => {
         setQuestions(result.docs.map((doc: any) => doc.data()));
       });
   }, [firebase]);
+  // https://www.googleapis.com/geolocation/v1/geolocate?key=YOUR_API_KEY
 
   const searchForAddress = (address: string) => {
     if (!isSearching) {
@@ -54,39 +55,50 @@ export const LocationSelection = () => {
 
   return (
     <div className="location">
-      <Grid container direction="row" justify="center" alignItems="center">
-        <Grid item xs={12} container justify="center">
-          <Typography variant="h1">Region festlegen</Typography>
-        </Grid>
-        <Grid item xs={12} container justify="center">
-          <Autocomplete
-            className="searchAddress"
-            freeSolo
-            options={addresses.map(
-              (address: googleMapsGeocodeEntry) => address.formatted_address
-            )}
-            renderInput={params => (
-              <TextField
-                {...params}
-                label="Adresse eingeben"
-                variant="outlined"
-                onChange={event => searchForAddress(event.target.value)}
-              />
-            )}
-            onChange={(event: any) =>
-              setSelectedAddress(addresses[event.target.value])
-            }
-          />
-        </Grid>
-        <Grid item xs={12} container justify="center">
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            onClick={() => nextStep()}
-          >
-            Weiter
-          </Button>
+      <Grid
+        className="full-height"
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+      >
+        <Grid container direction="row" spacing={5}>
+          <Grid item xs={12} container justify="center">
+            <Typography variant="h1">Region festlegen</Typography>
+          </Grid>
+          <Grid item xs={12} container justify="center">
+            <Autocomplete
+              className="searchAddress"
+              freeSolo
+              options={addresses.map(
+                (address: googleMapsGeocodeEntry) => address.formatted_address
+              )}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  label="Adresse eingeben"
+                  variant="outlined"
+                  onChange={event => searchForAddress(event.target.value)}
+                />
+              )}
+              onChange={(event: any) =>
+                setSelectedAddress(addresses[event.target.value])
+              }
+            />
+          </Grid>
+          <Grid item xs={12} container justify="center">
+            Standprt
+          </Grid>
+          <Grid item xs={12} container justify="center">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              onClick={() => nextStep()}
+            >
+              Weiter
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </div>

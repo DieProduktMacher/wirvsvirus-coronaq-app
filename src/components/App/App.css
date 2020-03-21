@@ -37,6 +37,10 @@
   }
 }
 
+.full-height {
+  min-height: 100vh;
+}
+
 .searchAddress {
   min-width: 300px;
 }
