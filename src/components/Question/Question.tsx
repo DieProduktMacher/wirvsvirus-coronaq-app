@@ -1,7 +1,5 @@
 import React from "react";
 
-function Question() {
+export const Question = () => {
   return <div className="question">question</div>;
 }
-
-export default Question;

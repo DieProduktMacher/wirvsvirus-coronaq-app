@@ -4,9 +4,13 @@ import "./index.css";
 import App from "./components/App/App";
 import * as serviceWorker from "./serviceWorker";
 
+import * as Firebase from './services/Firebase';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Firebase.Context.Provider value={new Firebase.Service()}>
+      <App />
+    </Firebase.Context.Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

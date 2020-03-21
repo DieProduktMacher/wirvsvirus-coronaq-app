@@ -1,10 +1,10 @@
 import React from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import routes from "./routesConfig";
 
-import LocationSelection from "../LocationSelection/LocationSelection";
-import Question from "../Question/Question";
-import Answer from "../Answer/Answer";
+import {LocationSelection} from "../LocationSelection/LocationSelection";
+import {Question} from "../Question/Question";
+import {Answer} from "../Answer/Answer";
 
 const Router = () => {
   return (
