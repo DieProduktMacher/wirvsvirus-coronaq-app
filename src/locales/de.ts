@@ -13,6 +13,11 @@ export const de = {
         get_answer: "Geprüfte Frage erhalten"
       },
       start: "Los geht's"
+    },
+    location: {
+      headline: "Region festlegen",
+      address_input: "Ort eingeben",
+      geolocation: "Eigenen Standort verwenden"
     }
   }
 };

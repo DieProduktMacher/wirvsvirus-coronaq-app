@@ -22,6 +22,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { Context as FirebaseContext } from "../../services/Firebase";
 import axios, { AxiosResponse } from "axios";
+import { useTranslation } from "react-i18next";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -42,6 +43,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
   >();
 
   const history = useHistory();
+  const { t } = useTranslation();
 
   function nextStep() {
     history.push("/type");
@@ -87,7 +89,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
       >
         <Grid container direction="row" spacing={5}>
           <Grid item xs={12} container justify="center">
-            <Typography variant="h1">Region festlegen</Typography>
+            <Typography variant="h1">{t("location:headline")}</Typography>
           </Grid>
           <Grid item xs={12} container justify="center">
             <Autocomplete
@@ -99,7 +101,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
               renderInput={params => (
                 <TextField
                   {...params}
-                  label="Adresse eingeben"
+                  label={t("location:address_input")}
                   variant="outlined"
                   onChange={event => searchForAddress(event.target.value)}
                 />
@@ -110,7 +112,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
             />
           </Grid>
           <Grid item xs={12} container justify="center">
-            Standprt
+            {t("location:geolocation")}
           </Grid>
           <Grid item xs={12} container justify="center">
             <Button
@@ -119,7 +121,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
               color="primary"
               onClick={() => nextStep()}
             >
-              Weiter
+              {t("next")}
             </Button>
           </Grid>
         </Grid>
