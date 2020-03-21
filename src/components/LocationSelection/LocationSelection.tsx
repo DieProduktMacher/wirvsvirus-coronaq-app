@@ -1,5 +1,19 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Grid, TextField, Typography, Button } from "@material-ui/core";
+import React, {
+  FunctionComponent,
+  useState,
+  useContext,
+  useEffect
+} from "react";
+import {
+  Grid,
+  TextField,
+  Typography,
+  Button,
+  createStyles,
+  Theme,
+  withStyles,
+  WithStyles
+} from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {
   googleMapsGeocodeResponse,
@@ -9,7 +23,16 @@ import { useHistory } from "react-router-dom";
 import { Context as FirebaseContext } from "../../services/Firebase";
 import axios, { AxiosResponse } from "axios";
 
-export const LocationSelection = () => {
+const styles = (theme: Theme) =>
+  createStyles({
+    searchAddress: {
+      minWidth: "300px"
+    }
+  });
+
+const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
+  classes
+}) => {
   const firebase = useContext(FirebaseContext);
   const [questions, setQuestions] = useState<any>(null);
   const [isSearching, setIsSearching] = useState(false);
@@ -54,7 +77,7 @@ export const LocationSelection = () => {
   };
 
   return (
-    <div className="location">
+    <section>
       <Grid
         className="full-height"
         container
@@ -68,7 +91,7 @@ export const LocationSelection = () => {
           </Grid>
           <Grid item xs={12} container justify="center">
             <Autocomplete
-              className="searchAddress"
+              className={classes.searchAddress}
               freeSolo
               options={addresses.map(
                 (address: googleMapsGeocodeEntry) => address.formatted_address
@@ -101,6 +124,8 @@ export const LocationSelection = () => {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </section>
   );
 };
+
+export default withStyles(styles)(LocationSelection);
