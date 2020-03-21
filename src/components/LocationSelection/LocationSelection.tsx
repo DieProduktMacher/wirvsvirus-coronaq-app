@@ -41,6 +41,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
   const [questions, setQuestions] = useState<any>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [addresses, setAddresses] = useState<googleMapsGeocodeResponse>([]);
+  const [currentAddress] = useState(state.address);
 
   const history = useHistory();
   const { t } = useTranslation();
@@ -78,7 +79,6 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
 
   return (
     <section>
-      {console.log("global", state.address)}
       <Grid
         className="full-height"
         container
@@ -86,14 +86,17 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
         justify="center"
         alignItems="center"
       >
-        <Grid container direction="row" spacing={5}>
-          <Grid item xs={12} container justify="center">
+        <Grid container direction="column" spacing={5}>
+          <Grid item container justify="center">
             <Typography variant="h1">{t("location:headline")}</Typography>
           </Grid>
-          <Grid item xs={12} container justify="center">
+          <Grid item container justify="center">
             <Autocomplete
               className={classes.searchAddress}
               freeSolo
+              defaultValue={
+                currentAddress ? currentAddress.formatted_address : undefined
+              }
               options={addresses.map(
                 (address: googleMapsGeocodeEntry) => address.formatted_address
               )}
@@ -110,10 +113,10 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
               }
             />
           </Grid>
-          <Grid item xs={12} container justify="center">
+          <Grid item container justify="center">
             {t("location:geolocation")}
           </Grid>
-          <Grid item xs={12} container justify="center">
+          <Grid item container justify="center">
             <Button
               type="submit"
               variant="contained"

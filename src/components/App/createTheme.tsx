@@ -1,4 +1,4 @@
-import { PaletteType } from "@material-ui/core";
+import { PaletteType, createStyles } from "@material-ui/core";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { PaletteOptions } from "@material-ui/core/styles/createPalette";
 import { TypographyOptions } from "@material-ui/core/styles/createTypography";
@@ -11,7 +11,7 @@ declare module "@material-ui/core/styles/createMuiTheme" {
       danger: string;
     };
   }
-
+  // allow configuration using `createMuiTheme`
   interface ThemeOptions {
     status?: {
       success?: string;
@@ -38,7 +38,7 @@ const palette: PaletteOptions = {
     white: "#ffffff"
   },
   primary: {
-    main: "#A60063",
+    main: "#0078ca",
     light: "#24A1DF",
     dark: "#00325a"
   },

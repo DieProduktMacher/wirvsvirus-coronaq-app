@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, {
+  createContext,
+  useContext,
+  useReducer,
+  useEffect,
+  useState
+} from "react";
 import { googleMapsGeocodeEntry } from "../models/map";
 
 interface State {
@@ -21,8 +27,8 @@ interface actions {
 const Context = createContext<[State, actions]>([
   initialState,
   {
-    setAddress: async loginData => {},
-    removeAddress: async () => {}
+    setAddress: address => {},
+    removeAddress: () => {}
   }
 ]);
 
@@ -45,20 +51,40 @@ const reducer = (state: State, action: Action) => {
 
 export const ContextProvider: React.ComponentType = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [loading, setloading] = useState(true);
 
   const actions = React.useMemo(() => {
     return {
       setAddress: (address: googleMapsGeocodeEntry) => {
+        localStorage.setItem("address", JSON.stringify(address));
         dispatch({ type: "setAddress", address: address });
       },
       removeAddress: () => {
+        localStorage.removeItem("address");
         dispatch({ type: "removeAddress" });
       }
     };
   }, [dispatch]);
 
+  // get inital login status
+  useEffect(() => {
+    (async () => {
+      const address = localStorage.getItem("address");
+      if (address && !address === undefined) {
+        dispatch({
+          type: "setAddress",
+          address: JSON.parse(address)
+        });
+      }
+
+      setloading(false);
+    })();
+  }, [dispatch]);
+
   return (
-    <Context.Provider value={[state, actions]}>{children}</Context.Provider>
+    <Context.Provider value={[state, actions]}>
+      {loading ? null : children}
+    </Context.Provider>
   );
 };
 
