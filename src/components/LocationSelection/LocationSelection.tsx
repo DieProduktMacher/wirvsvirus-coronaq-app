@@ -1,8 +1,8 @@
 import React, {
   FunctionComponent,
   useState,
-  useContext,
-  useEffect
+  useEffect,
+  useContext
 } from "react";
 import {
   Grid,
@@ -23,6 +23,7 @@ import { useHistory } from "react-router-dom";
 import { Context as FirebaseContext } from "../../services/Firebase";
 import axios, { AxiosResponse } from "axios";
 import { useTranslation } from "react-i18next";
+import { useContextState } from "../App/Context";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -35,18 +36,17 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
   classes
 }) => {
   const firebase = useContext(FirebaseContext);
+  const [state, actions] = useContextState();
+
   const [questions, setQuestions] = useState<any>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [addresses, setAddresses] = useState<googleMapsGeocodeResponse>([]);
-  const [selectedAddress, setSelectedAddress] = useState<
-    googleMapsGeocodeEntry
-  >();
 
   const history = useHistory();
   const { t } = useTranslation();
 
   function nextStep() {
-    history.push("/type");
+    history.push("/question");
   }
 
   useEffect(() => {
@@ -63,12 +63,10 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
   const searchForAddress = (address: string) => {
     if (!isSearching) {
       const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GOOGLEMAPS_API_KEY}`;
-      console.log("searching", address);
       setIsSearching(true);
       axios
         .get(url)
         .then((response: AxiosResponse) => {
-          console.log(response);
           setAddresses(response.data.results);
         })
         .catch(error => {
@@ -80,6 +78,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
 
   return (
     <section>
+      {console.log("global", state.address)}
       <Grid
         className="full-height"
         container
@@ -107,7 +106,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
                 />
               )}
               onChange={(event: any) =>
-                setSelectedAddress(addresses[event.target.value])
+                actions.setAddress(addresses[event.target.value])
               }
             />
           </Grid>

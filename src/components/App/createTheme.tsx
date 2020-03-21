@@ -140,6 +140,5 @@ const defaultSettings: ThemeSettings = {
 };
 
 export default function createTheme(settings = defaultSettings) {
-  console.log("create");
   return createMuiTheme({ ...settings, ...status });
 }
