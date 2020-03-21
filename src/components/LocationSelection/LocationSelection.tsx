@@ -52,24 +52,21 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
     address: string,
     updateState?: boolean
   ) => {
-    if (!isSearching) {
-      const url = `https://maps.googleapis.com/maps/api/geocode/json?${method}=${address}&key=${process.env.REACT_APP_GOOGLEMAPS_API_KEY}`;
-      setIsSearching(true);
-      return axios
-        .get(url)
-        .then((response: AxiosResponse) => {
-          setAddresses(response.data.results);
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?${method}=${address}&key=${process.env.REACT_APP_GOOGLEMAPS_API_KEY}`;
+    axios
+      .get(url)
+      .then((response: AxiosResponse) => {
+        setAddresses(response.data.results);
 
-          if (updateState) {
-            actions.setAddress(response.data.results[0]);
-            setCurrentAddress(response.data.results[0]);
-          }
-        })
-        .catch(error => {
-          console.error(error);
-        })
-        .then(() => setIsSearching(false));
-    }
+        if (updateState) {
+          actions.setAddress(response.data.results[0]);
+          setCurrentAddress(response.data.results[0]);
+          window.location.reload();
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   return (
