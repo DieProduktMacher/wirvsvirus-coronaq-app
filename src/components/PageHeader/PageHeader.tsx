@@ -7,6 +7,7 @@ import {
   withStyles,
   LinearProgress
 } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 import { GpsFixed } from "@material-ui/icons";
 import { useAppState } from "../App/State";
@@ -20,7 +21,8 @@ const styles = (theme: Theme) =>
     location: { height: "100%", margin: 0 },
     logo: {
       height: "64px",
-      padding: "8px 24px"
+      padding: "8px 24px",
+      cursor: "pointer"
     }
   });
 
@@ -28,6 +30,7 @@ const PageHeader: FunctionComponent<WithStyles<typeof styles>> = ({
   classes
 }) => {
   const [state] = useAppState();
+  const history = useHistory();
   return (
     <header>
       <Grid container direction="row" justify="space-between">
@@ -38,6 +41,7 @@ const PageHeader: FunctionComponent<WithStyles<typeof styles>> = ({
                 src="/assets/logos/coronaq.svg"
                 alt="CoronAQ"
                 className={classes.logo}
+                onClick={() => history.push("/")}
               />
             </Grid>
             {state.location && (

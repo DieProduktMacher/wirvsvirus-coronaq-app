@@ -113,11 +113,11 @@ const typography = {
   htmlFontSize: 16,
   fontSize: 16,
   body1: {
-    fontSize: 16,
+    fontSize: 18,
     lineHeight: 1.33
   },
   body2: {
-    fontSize: 14,
+    fontSize: 12,
     lineHeight: 1.33
   },
   h1: {
