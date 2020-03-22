@@ -45,7 +45,7 @@ export const FunctionalAutocomplete = withStyles(styles)(
     const [question, setQuestion] = useState<string>("");
 
     useEffect(() => {
-      actions.setStep(2);
+      actions.setStep(4);
     }, [actions]);
 
     useEffect(() => {
