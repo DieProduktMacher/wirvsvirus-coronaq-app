@@ -26,6 +26,9 @@ const styles = () =>
       fontSize: "24px",
       textAlign: "center",
       maxWidth: "876px"
+    },
+    section: {
+      background: "url('/assets/homebg.png')"
     }
   });
 
@@ -39,7 +42,7 @@ const Home: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
   }, [actions]);
 
   return (
-    <section>
+    <section className={classes.section}>
       <Grid container direction="column" spacing={5}>
         <Grid item container justify="center">
           <Typography variant="h1">
