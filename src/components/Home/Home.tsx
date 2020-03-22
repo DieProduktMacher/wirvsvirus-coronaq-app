@@ -19,7 +19,7 @@ export const Home = () => {
       <Grid container direction="column" spacing={5}>
         <Grid item container justify="center">
           <Typography variant="h1">
-            {t("home:welcome")} CORON<em>AQ</em>
+            {t("home:headline")} CORON<em>AQ</em>
           </Typography>
         </Grid>
         <Grid item container justify="center">
@@ -37,7 +37,7 @@ export const Home = () => {
         </Grid>
         <NavigationButtons
           isStart={true}
-          next={{ route: routes.location, title: "home:start" }}
+          next={{ route: routes.location, title: "home:next" }}
         />
       </Grid>
     </section>

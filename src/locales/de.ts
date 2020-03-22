@@ -3,7 +3,7 @@ export const de = {
     next: "Weiter",
     previous: "Zurück",
     home: {
-      welcome: "Willkommen bei",
+      headline: "Willkommen bei {{brand}}",
       intro:
         "Sinn und Zweck der Platform Lorem ipsum dolor sit amet zweite Zeile Sinn und Zweck der Platform Lorem ipsum dolor sit amet",
       how_it_works: "So funktionierts's",
@@ -12,7 +12,7 @@ export const de = {
         pose_question: "Frage stellen",
         get_answer: "Geprüfte Frage erhalten"
       },
-      start: "Los geht's"
+      next: "Los geht's"
     },
     location: {
       headline: "Region festlegen",
@@ -22,7 +22,8 @@ export const de = {
     },
     question: {
       headline: "Frage stellen",
-      input_question: "Was interessiert dich"
+      input_question: "Was interessiert dich",
+      next: "Absenden"
     }
   }
 };
