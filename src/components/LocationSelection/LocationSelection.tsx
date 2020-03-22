@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
+import React, { FunctionComponent, useState, ChangeEvent } from "react";
 import {
   Grid,
   TextField,
@@ -30,9 +30,10 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
 }) => {
   const [state, actions] = useContextState();
 
-  const [isSearching, setIsSearching] = useState(false);
   const [addresses, setAddresses] = useState<googleMapsGeocodeResponse>([]);
-  const [currentAddress, setCurrentAddress] = useState(state.address);
+  const [formattedAddress, setFormattedAddress] = useState<string | undefined>(
+    state.address ? state.address.formatted_address : ""
+  );
 
   const history = useHistory();
   const { t } = useTranslation();
@@ -60,8 +61,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
 
         if (updateState) {
           actions.setAddress(response.data.results[0]);
-          setCurrentAddress(response.data.results[0]);
-          window.location.reload();
+          setFormattedAddress(response.data.results[0].formatted_address);
         }
       })
       .catch(error => {
@@ -86,9 +86,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
             <Autocomplete
               className={classes.searchAddress}
               freeSolo
-              defaultValue={
-                currentAddress ? currentAddress.formatted_address : undefined
-              }
+              value={formattedAddress}
               options={addresses.map(
                 (address: googleMapsGeocodeEntry) => address.formatted_address
               )}
@@ -102,7 +100,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
                   }
                 />
               )}
-              onChange={(event: any) =>
+              onChange={(event: ChangeEvent<any>) =>
                 actions.setAddress(addresses[event.target.value])
               }
             />
