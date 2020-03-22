@@ -1,23 +1,14 @@
 import React from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
-import routes from "./routesConfig";
-
-import LocationSelection from "../Location/Location";
-import Question from "../Question/Question";
-import Answer from "../Answer/Answer";
-import { Home } from "../Home/Home";
+import { Route, Switch } from "react-router-dom";
+import { root, steps } from "./Routes";
 
 const Router = () => {
   return (
     <Switch>
-      <Redirect exact from="/" to={routes.home.getPath()} />
-      <Route path={routes.home.getPath()} component={Home} />
-      <Route
-        path={routes.locationSelection.getPath()}
-        component={LocationSelection}
-      />
-      <Route path={routes.question.getPath()} component={Question} />
-      <Route path={routes.answer.getPath()} component={Answer} />
+      {steps.map(({ path, component }) => (
+        <Route path={path} component={component} key={path} />
+      ))}
+      <Route path="/" component={root.component} />
     </Switch>
   );
 };

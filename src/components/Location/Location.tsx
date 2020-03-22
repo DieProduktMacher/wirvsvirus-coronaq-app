@@ -11,17 +11,20 @@ import {
   Button,
   createStyles,
   withStyles,
-  WithStyles
+  WithStyles,
+  Icon
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {
   googleMapsGeocodeResponse,
   googleMapsGeocodeEntry
 } from "../models/map";
-import { useHistory } from "react-router-dom";
+
 import axios, { AxiosResponse } from "axios";
 import { useTranslation } from "react-i18next";
 import { useAppState } from "../App/State";
+import routes from "../App/Routes";
+import NavigationButtons from "../NavigationButton/NavigationButtons";
 
 const styles = () =>
   createStyles({
@@ -30,7 +33,7 @@ const styles = () =>
     }
   });
 
-const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
+const Location: FunctionComponent<WithStyles<typeof styles>> = ({
   classes
 }) => {
   const [state, actions] = useAppState();
@@ -44,7 +47,6 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
     state.location ? state.location.formatted_address : ""
   );
 
-  const history = useHistory();
   const { t } = useTranslation();
 
   const getGeolocation = () => {
@@ -115,28 +117,21 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
             />
           </Grid>
           <Grid item container justify="center">
-            <Button color="primary" onClick={getGeolocation}>
+            <Button
+              color="primary"
+              onClick={getGeolocation}
+              startIcon={<Icon>gps_fixed</Icon>}
+            >
               {t("location:geolocation")}
             </Button>
           </Grid>
-          <Grid item container justify="center">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => history.push("/question")}
-            >
-              {t("next")}
-            </Button>
-          </Grid>
-          <Grid item container justify="center">
-            <Button color="primary" onClick={() => history.push("/home")}>
-              {t("back")}
-            </Button>
-          </Grid>
         </Grid>
+        <NavigationButtons
+          next={{ path: routes.question.path, title: "location:next" }}
+        />
       </Grid>
     </section>
   );
 };
 
-export default withStyles(styles)(LocationSelection);
+export default withStyles(styles)(Location);

@@ -1,7 +1,7 @@
 export const de = {
   translation: {
-    next: "weiter",
-    previous: "zurück",
+    next: "Weiter",
+    previous: "Zurück",
     home: {
       welcome: "Willkommen bei",
       intro:
@@ -17,7 +17,8 @@ export const de = {
     location: {
       headline: "Region festlegen",
       input_location: "Ort eingeben",
-      geolocation: "Eigenen Standort verwenden"
+      geolocation: "Eigenen Standort verwenden",
+      next: "Weiter"
     },
     question: {
       headline: "Frage stellen",
