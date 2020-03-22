@@ -1,9 +1,4 @@
-import React, {
-  FunctionComponent,
-  useState,
-  useEffect,
-  ChangeEvent
-} from "react";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppState } from "../App/State";
 import {
@@ -12,7 +7,6 @@ import {
   createStyles,
   Grid,
   Typography,
-  TextField,
   Card,
   CardContent,
   CardActions,
@@ -21,11 +15,11 @@ import {
   Link
 } from "@material-ui/core";
 import QuestionSlider from "../QuestionSlider/QuestionSlider";
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Share } from "@material-ui/icons";
 import StepNavigation from "../StepNavigation/StepNavigation";
 import routes from "../App/Routes";
 import { SearchQueryResult } from "../../models/question";
+import { FunctionalAutocomplete } from "../Question/Question";
 
 const styles = () =>
   createStyles({
@@ -46,7 +40,7 @@ const relatedQuestions = [
 const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
   const [state, actions] = useAppState();
   const { t } = useTranslation();
-  const [question, setQuestion] = useState<string>("");
+  const [, setQuestion] = useState<string>("");
   const [answers, setAnswers] = useState<Array<SearchQueryResult>>([]);
 
   useEffect(() => {
@@ -71,27 +65,7 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
         spacing={10}
       >
         <Grid item container justify="center">
-          <Autocomplete
-            className={classes.searchlocation}
-            freeSolo
-            value={question}
-            options={[]}
-            renderInput={params => (
-              <TextField
-                {...params}
-                label={t("question:input_question")}
-                variant="outlined"
-                // onChange={event => getRelatedQuestions(event.target.value)}
-              />
-            )}
-            onChange={(event: ChangeEvent<any>) => {
-              // setQuestion(event.currentTarget.value)
-              actions.setQuestion(event.target.value);
-            }}
-            onBlur={(event: any) => {
-              actions.setQuestion(event.target.value);
-            }}
-          />
+          <FunctionalAutocomplete />
         </Grid>
 
         <Grid item container justify="center">

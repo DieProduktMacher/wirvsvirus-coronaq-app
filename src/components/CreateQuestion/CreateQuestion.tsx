@@ -2,8 +2,7 @@ import React, {
   FunctionComponent,
   useState,
   useEffect,
-  useContext,
-  ChangeEvent
+  useContext
 } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppState } from "../App/State";
@@ -22,8 +21,8 @@ import {
 } from "@material-ui/core";
 import QuestionSlider from "../QuestionSlider/QuestionSlider";
 import { Context as FirebaseContext } from "../../services/Firebase";
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useHistory } from "react-router-dom";
+import { FunctionalAutocomplete } from "../Question/Question";
 
 const styles = () =>
   createStyles({
@@ -41,10 +40,6 @@ const styles = () =>
     },
     cta: {
       textTransform: "uppercase"
-    },
-    actions: {
-      // display: 'flex',
-      // justifyContent: 'space'
     }
   });
 
@@ -58,14 +53,16 @@ const relatedQuestions = [
   "Ab wann darf ich wieder normal nach draußen gehen?"
 ];
 
-const CreateQuestion: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
-  const [state, actions] = useAppState();
+const CreateQuestion: FunctionComponent<WithStyles<typeof styles>> = ({
+  classes
+}) => {
+  const [state] = useAppState();
   const { t } = useTranslation();
   const history = useHistory();
   const firebase = useContext(FirebaseContext);
 
   const [disabled, setDisabled] = useState<boolean>(true);
-  const [question, setQuestion] = useState<string>("");
+  const [, setQuestion] = useState<string>("");
   const [newQuestion, setNewQuestion] = useState<string>("");
   const [questionDetails, setQuestionDetails] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -84,16 +81,18 @@ const CreateQuestion: FunctionComponent<WithStyles<typeof styles>> = ({ classes 
       authoredBy: email
     };
 
-    firebase?.firestore.collection('requests').add(newRequest)
+    firebase?.firestore
+      .collection("requests")
+      .add(newRequest)
       .then(ref => {
         console.log(ref);
-        history.push('/question/new/confirm');
+        history.push("/question/new/confirm");
       })
       .catch(console.error);
   };
 
   const validateNewQuestion = (): boolean => {
-    return (newQuestion.length > 10 && newQuestion.split(' ').length > 3);
+    return newQuestion.length > 10 && newQuestion.split(" ").length > 3;
   };
 
   const validateEmail = (): boolean => {
@@ -118,27 +117,7 @@ const CreateQuestion: FunctionComponent<WithStyles<typeof styles>> = ({ classes 
         spacing={10}
       >
         <Grid item container justify="center">
-          <Autocomplete
-            className={classes.searchlocation}
-            freeSolo
-            value={question}
-            options={[]}
-            renderInput={params => (
-              <TextField
-                {...params}
-                label={t("question:input_question")}
-                variant="outlined"
-                // onChange={event => getRelatedQuestions(event.target.value)}
-              />
-            )}
-            onChange={(event: ChangeEvent<any>) => {
-              // setQuestion(event.currentTarget.value)
-              actions.setQuestion(event.target.value);
-            }}
-            onBlur={(event: any) => {
-              actions.setQuestion(event.target.value);
-            }}
-          />
+          <FunctionalAutocomplete />
         </Grid>
 
         <Grid item container justify="center">
@@ -146,9 +125,7 @@ const CreateQuestion: FunctionComponent<WithStyles<typeof styles>> = ({ classes 
             <CardContent>
               <Grid container direction="column" spacing={4}>
                 <Grid item container justify={"center"}>
-                  <Typography variant={"h1"}>
-                    Frage einsenden
-                  </Typography>
+                  <Typography variant={"h1"}>Frage einsenden</Typography>
                 </Grid>
                 <Grid item>
                   <Divider />
@@ -188,18 +165,26 @@ const CreateQuestion: FunctionComponent<WithStyles<typeof styles>> = ({ classes 
                       variant="outlined"
                       onChange={(event: any) => {
                         setEmail(event.target.value);
-                         updateDisabled();
+                        updateDisabled();
                       }}
                     />
                   </Grid>
                 </Grid>
               </Grid>
             </CardContent>
-            <CardActions className={classes.actions}>
-              <Grid item container justify={"space-between"} alignItems="center" direction="column" spacing={4}>
+            <CardActions>
+              <Grid
+                item
+                container
+                justify={"space-between"}
+                alignItems="center"
+                direction="column"
+                spacing={4}
+              >
                 <Grid item>
                   <Typography variant={"body1"}>
-                    Du erhältst die Antwort in der Regel innerhalb von 24 Stunden per E-Mail.
+                    Du erhältst die Antwort in der Regel innerhalb von 24
+                    Stunden per E-Mail.
                   </Typography>
                 </Grid>
                 <Grid item>
