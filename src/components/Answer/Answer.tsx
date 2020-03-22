@@ -81,7 +81,7 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
   const { t } = useTranslation();
   const [question, setQuestion] = useState<string>("");
   const [answers, setAnswers] = useState<Array<SearchQueryResult>>([]);
-  const [showSharingModal, setShowSharingModal] = useState<boolean>(true);
+  const [showSharingModal, setShowSharingModal] = useState<boolean>(false);
 
   useEffect(() => {
     actions.setStep(3);
