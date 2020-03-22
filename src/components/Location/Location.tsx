@@ -130,14 +130,14 @@ const Location: FunctionComponent<WithStyles<typeof styles>> = ({
               {t("location:geolocation")}
             </Button>
           </Grid>
+          <StepNavigation
+            next={{
+              route: routes.question,
+              title: "location:next",
+              disabled: !state.location
+            }}
+          />
         </Grid>
-        <StepNavigation
-          next={{
-            route: routes.question,
-            title: "location:next",
-            disabled: !state.location
-          }}
-        />
       </Grid>
     </section>
   );
