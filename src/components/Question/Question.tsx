@@ -53,9 +53,7 @@ const Question: FunctionComponent<WithStyles<typeof styles>> = ({
           terms: statedQuestion
         })
           .then((value: firebase.functions.HttpsCallableResult) => {
-            let questions = value.data.hits.hits.map((hit: any) => {
-              return hit._source.question['de'];
-            });
+            let questions = value.data;
 
             setPreviousQuestions(questions);
           })
