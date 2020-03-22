@@ -2,23 +2,24 @@ import React, {
   FunctionComponent,
   useEffect,
   useState,
-  ChangeEvent,
-  useContext
+  ChangeEvent
+  // useContext
 } from "react";
 import { useAppState } from "../App/State";
 import {
   Grid,
   TextField,
-  Typography,
   createStyles,
   withStyles,
   WithStyles,
-  Button
+  Typography
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useTranslation } from "react-i18next";
-import { Context as FirebaseContext } from "../../services/Firebase";
-import { useHistory } from "react-router-dom";
+// import { Context as FirebaseContext } from "../../services/Firebase";
+import StepNavigation from "../StepNavigation/StepNavigation";
+import routes from "../App/Routes";
+import StepHeader from "../StepHeader/StepHeader";
 import QuestionSlider from "../QuestionSlider/QuestionSlider";
 
 const styles = () =>
@@ -33,7 +34,6 @@ const Question: FunctionComponent<WithStyles<typeof styles>> = ({
 }) => {
   const [, actions] = useAppState();
   // const firebase = useContext(FirebaseContext);
-  const history = useHistory();
   const { t } = useTranslation();
 
   const [previousQuestions] = useState<Array<any>>([]);
@@ -78,9 +78,7 @@ const Question: FunctionComponent<WithStyles<typeof styles>> = ({
     <section>
       <Grid container direction="row" justify="center" alignItems="center">
         <Grid container direction="column" spacing={5}>
-          <Grid item container justify="center">
-            <Typography variant="h1">{t("question:headline")}</Typography>
-          </Grid>
+          <StepHeader headline="question:headline" icon="textsms" />
           <Grid item container justify="center">
             <Autocomplete
               className={classes.searchlocation}
@@ -104,15 +102,13 @@ const Question: FunctionComponent<WithStyles<typeof styles>> = ({
               }}
             />
           </Grid>
-          <Grid item container justify="center">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => history.push("/answer")}
-            >
-              {t("next")}
-            </Button>
-          </Grid>
+          <StepNavigation
+            next={{
+              route: routes.answer,
+              title: "question:next",
+              disabled: !question
+            }}
+          />
           <Grid item container justify="center">
             <Typography>{t("question:popular_headline")}</Typography>
             <QuestionSlider questions={popularQuestions} />

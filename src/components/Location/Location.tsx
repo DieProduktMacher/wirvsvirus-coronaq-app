@@ -7,7 +7,6 @@ import React, {
 import {
   Grid,
   TextField,
-  Typography,
   Button,
   createStyles,
   withStyles,
@@ -24,10 +23,17 @@ import axios, { AxiosResponse } from "axios";
 import { useTranslation } from "react-i18next";
 import { useAppState } from "../App/State";
 import routes from "../App/Routes";
-import NavigationButtons from "../NavigationButton/NavigationButtons";
+import StepNavigation from "../StepNavigation/StepNavigation";
+import StepHeader from "../StepHeader/StepHeader";
 
 const styles = () =>
   createStyles({
+    pill: {
+      borderRadius: "20px",
+      paddingLeft: "24px",
+      paddingRight: "24px",
+      minWidth: "192px"
+    },
     searchlocation: {
       minWidth: "300px"
     }
@@ -90,9 +96,7 @@ const Location: FunctionComponent<WithStyles<typeof styles>> = ({
         alignItems="center"
       >
         <Grid container direction="column" spacing={5}>
-          <Grid item container justify="center">
-            <Typography variant="h1">{t("location:headline")}</Typography>
-          </Grid>
+          <StepHeader headline="location:headline" icon="gps_fixed" />
           <Grid item container justify="center">
             <Autocomplete
               className={classes.searchlocation}
@@ -119,16 +123,21 @@ const Location: FunctionComponent<WithStyles<typeof styles>> = ({
           <Grid item container justify="center">
             <Button
               color="primary"
+              className={classes.pill}
               onClick={getGeolocation}
               startIcon={<Icon>gps_fixed</Icon>}
             >
               {t("location:geolocation")}
             </Button>
           </Grid>
+          <StepNavigation
+            next={{
+              route: routes.question,
+              title: "location:next",
+              disabled: !state.location
+            }}
+          />
         </Grid>
-        <NavigationButtons
-          next={{ path: routes.question.path, title: "location:next" }}
-        />
       </Grid>
     </section>
   );

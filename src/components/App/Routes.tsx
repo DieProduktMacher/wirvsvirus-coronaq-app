@@ -2,18 +2,7 @@ import Location from "../Location/Location";
 import Question from "../Question/Question";
 import Answer from "../Answer/Answer";
 import { Home } from "../Home/Home";
-
-class Route {
-  readonly path: string;
-  readonly component: React.ComponentType;
-  readonly isStep: boolean;
-
-  constructor(path: string, component: React.ComponentType, isStep = true) {
-    this.path = path;
-    this.component = component;
-    this.isStep = isStep;
-  }
-}
+import Route from "./Route";
 
 export const routes = {
   home: new Route("/home", Home),
@@ -21,6 +10,7 @@ export const routes = {
   question: new Route("/question", Question),
   answer: new Route("/answer", Answer)
 };
+
 export default routes;
 
 export const root = routes.home;

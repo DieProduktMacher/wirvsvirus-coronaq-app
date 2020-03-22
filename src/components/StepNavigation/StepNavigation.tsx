@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
+import Route from "../App/Route";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -27,14 +28,15 @@ interface Props extends WithStyles<typeof styles> {
   isStart?: boolean;
   next: {
     title: string;
-    path: string;
+    route: Route;
+    disabled?: boolean;
   };
 }
 
-const NavigationButtons: FunctionComponent<Props> = ({
+const StepNavigation: FunctionComponent<Props> = ({
   classes,
-  next,
-  isStart = false
+  next: { route, title, disabled = false },
+  isStart: hideBack = false
 }) => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -46,13 +48,14 @@ const NavigationButtons: FunctionComponent<Props> = ({
           variant="contained"
           color="primary"
           className={[classes.pill, classes.cta].join(" ")}
-          onClick={() => history.push(next.path)}
+          onClick={() => history.push(route.path)}
+          disabled={disabled}
           disableElevation
         >
-          {t(next.title)}
+          {t(title)}
         </Button>
       </Grid>
-      {!isStart && (
+      {!hideBack && (
         <Grid item container justify="center">
           <Button
             color="primary"
@@ -67,4 +70,4 @@ const NavigationButtons: FunctionComponent<Props> = ({
   );
 };
 
-export default withStyles(styles)(NavigationButtons);
+export default withStyles(styles)(StepNavigation);
