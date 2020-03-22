@@ -1,6 +1,6 @@
 import Location from "../Location/Location";
-import { Question } from "../Question/Question";
-import { Answer } from "../Answer/Answer";
+import Question from "../Question/Question";
+import Answer from "../Answer/Answer";
 import { Home } from "../Home/Home";
 
 class Route {
