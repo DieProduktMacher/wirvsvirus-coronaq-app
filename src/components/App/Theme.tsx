@@ -158,6 +158,5 @@ const defaultSettings: ThemeSettings = {
   typography
 };
 
-export default function createTheme(settings = defaultSettings) {
-  return createMuiTheme({ ...settings, ...status });
-}
+export const createTheme = (settings = defaultSettings) =>
+  createMuiTheme({ ...settings, ...status });

@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import "./App.css";
 import { ThemeProvider } from "@material-ui/styles";
-import createTheme from "./createTheme";
+import { createTheme } from "./Theme";
 
 import { StateProvider } from "./State";
 
