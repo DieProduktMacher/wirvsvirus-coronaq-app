@@ -32,7 +32,13 @@ export const de = {
         notification: "Aktuellste Meldung",
         answeredAt: "Stand",
         validTo: "Gültig Bis",
-        authoredAt: "Meldung vom"
+        authoredAt: "Meldung vom",
+        fallback: {
+          headline: "Leider haben wir dazu noch keine offizielle Aussage.",
+          body:
+            "Du kannst jetzt einfach deine Frage bei deiner zuständigen Behörde einsenden und erhältst die Antwort direkt per E-Mail.",
+          button: "Frage einsenden"
+        }
       },
       fallback: {
         headline: "Keine passende Antwort dabei?",
@@ -42,7 +48,7 @@ export const de = {
       related_headline: "Diese Fragen könnten dich auch interessieren:"
     },
     create_question: {
-      next: 'Frage einsenden'
+      next: "Frage einsenden"
     }
   }
 };

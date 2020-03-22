@@ -13,7 +13,8 @@ import {
   IconButton,
   Divider,
   Link,
-  TextField
+  TextField,
+  Button
 } from "@material-ui/core";
 import QuestionSlider from "../QuestionSlider/QuestionSlider";
 import Modal from "@material-ui/core/Modal";
@@ -22,6 +23,7 @@ import StepNavigation from "../StepNavigation/StepNavigation";
 import routes from "../App/Routes";
 import { SearchQueryResult } from "../../models/question";
 import { FunctionalAutocomplete } from "../Question/Question";
+import { useHistory } from "react-router-dom";
 
 const styles = () =>
   createStyles({
@@ -72,6 +74,7 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
   const [, setQuestion] = useState<string>("");
   const [answers, setAnswers] = useState<Array<SearchQueryResult>>([]);
   const [showSharingModal, setShowSharingModal] = useState<boolean>(false);
+  const history = useHistory();
 
   useEffect(() => {
     actions.setStep(3);
@@ -205,16 +208,34 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
                 >
                   <Grid item container>
                     <Typography variant={"h1"}>
-                      {answers.length > 0 && answers[0].data.question.de}
+                      {answers.length > 0
+                        ? answers[0].data.question.de
+                        : t("answer:main:fallback:headline")}
                     </Typography>
                   </Grid>
                   <Grid item>
                     <Divider />
                   </Grid>
-                  <Grid item container>
-                    <Typography variant={"body1"}>
-                      {answers.length > 0 && answers[0].data.answer.de}
-                    </Typography>
+                  <Grid item container spacing={3}>
+                    <Grid item container>
+                      <Typography variant={"body1"}>
+                        {answers.length > 0
+                          ? answers[0].data.answer.de
+                          : t("answer:main:fallback:body")}
+                      </Typography>
+                    </Grid>
+                    {answers.length === 0 && (
+                      <Grid item container justify="center">
+                        <Button
+                          className={classes.pill}
+                          color={"primary"}
+                          variant={"contained"}
+                          onClick={() => history.push("/questions/new")}
+                        >
+                          {t("answer:main:fallback:button")}
+                        </Button>
+                      </Grid>
+                    )}
                   </Grid>
                 </Grid>
               </Grid>

@@ -29,14 +29,14 @@ type Action =
   | { type: "resetLocation" }
   | { type: "setStep"; step: number }
   | { type: "setQuestion"; question: string }
-  | { type: "setAnswers"; answers: Array<SearchQueryResult> };
+  | { type: "setAnswers"; answers: Array<SearchQueryResult> | null };
 
 interface actions {
   setLocation: (location: googleMapsGeocodeEntry) => void;
   resetLocation: () => void;
   setStep: (step: number) => void;
   setQuestion: (question: string) => void;
-  setAnswers: (answers: Array<SearchQueryResult>) => void;
+  setAnswers: (answers: Array<SearchQueryResult> | null) => void;
 }
 
 const StateContext = createContext<[State, actions]>([
@@ -103,13 +103,16 @@ export const StateProvider: React.ComponentType = ({ children }) => {
         localStorage.setItem("question", JSON.stringify(question));
         dispatch({ type: "setQuestion", question });
       },
-      setAnswers: (answers: Array<SearchQueryResult>) => {
+      setAnswers: (answers: Array<SearchQueryResult> | null) => {
         if (answers && answers.length > 0) {
           try {
             localStorage.setItem("answers", JSON.stringify(answers));
           } catch (error) {
             console.error(error);
           }
+          dispatch({ type: "setAnswers", answers });
+        } else {
+          localStorage.removeItem("answers");
           dispatch({ type: "setAnswers", answers });
         }
       }
