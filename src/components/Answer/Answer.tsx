@@ -12,10 +12,12 @@ import {
   CardActions,
   IconButton,
   Divider,
-  Link
+  Link,
+  TextField
 } from "@material-ui/core";
 import QuestionSlider from "../QuestionSlider/QuestionSlider";
-import { Share } from "@material-ui/icons";
+import Modal from "@material-ui/core/Modal";
+import { Share, CloseTwoTone } from "@material-ui/icons";
 import StepNavigation from "../StepNavigation/StepNavigation";
 import routes from "../App/Routes";
 import { SearchQueryResult } from "../../models/question";
@@ -28,6 +30,33 @@ const styles = () =>
     },
     virus: {
       marginRight: "1em"
+    },
+    inputfield: {
+      width: "100%"
+    },
+    logo: {
+      maxWidth: "200px",
+      margin: "auto",
+      display: "block"
+    },
+    modal: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    },
+    modal_content: {
+      background: "white",
+      padding: "30px",
+      width: "50%"
+    },
+    pill: {
+      borderRadius: "20px",
+      paddingLeft: "24px",
+      paddingRight: "24px",
+      minWidth: "192px"
+    },
+    cta: {
+      textTransform: "uppercase"
     }
   });
 
@@ -42,6 +71,7 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
   const { t } = useTranslation();
   const [, setQuestion] = useState<string>("");
   const [answers, setAnswers] = useState<Array<SearchQueryResult>>([]);
+  const [showSharingModal, setShowSharingModal] = useState<boolean>(false);
 
   useEffect(() => {
     actions.setStep(3);
@@ -54,6 +84,77 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
   useEffect(() => {
     state.answers && setAnswers(state.answers);
   }, [state.answers]);
+
+  const onFacebook = () => {
+    const shareUrl =
+      "https://www.facebook.com/sharer/sharer.php?u=" + window.location.href;
+    const win = window.open(
+      shareUrl,
+      "ShareOnFacebook",
+      "location=1,toolbar=0," + popup_params(500, 350)
+    );
+
+    if (win) {
+      win.opener = null; // 2
+    }
+  };
+
+  const onTwitter = (text: string) => {
+    const shareUrl =
+      "https://twitter.com/intent/tweet?url=" +
+      window.location.href +
+      "&text=" +
+      text;
+    const win = window.open(
+      shareUrl,
+      "ShareOnTwitter",
+      "location=1,toolbar=0," + popup_params(500, 350)
+    );
+
+    if (win) {
+      win.opener = null; // 2
+    }
+  };
+
+  const onWhatsapp = (text: string) => {
+    // window.location = `whatsapp://send?text=${text}: ${window.location.href}`;
+  };
+
+  const popup_params = (width: number, height: number): string => {
+    const a =
+      typeof window.screenX != "undefined" ? window.screenX : window.screenLeft;
+    const i =
+      typeof window.screenY != "undefined" ? window.screenY : window.screenTop;
+    const g =
+      typeof window.outerWidth != "undefined"
+        ? window.outerWidth
+        : document.documentElement.clientWidth;
+    const f =
+      typeof window.outerHeight != "undefined"
+        ? window.outerHeight
+        : document.documentElement.clientHeight - 22;
+    const h = a < 0 ? window.screen.width + a : a;
+    const c = h + (g - width) / 2;
+    const left = parseInt(`${c}`, 10);
+    const d = i + (f - height) / 2.5;
+    const top = parseInt(`${d}`, 10);
+
+    return (
+      "width=" +
+      width +
+      ",height=" +
+      height +
+      ",left=" +
+      left +
+      ",top=" +
+      top +
+      ",scrollbars=1"
+    );
+  };
+
+  const getShareLink = (): string => {
+    return window.location.href;
+  };
 
   return (
     <section>
@@ -135,7 +236,12 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
                       </Link>
                     )}
                   </Typography>
-                  <IconButton color="primary">
+                  <IconButton
+                    color="primary"
+                    onClick={() => {
+                      setShowSharingModal(true);
+                    }}
+                  >
                     <Share />
                   </IconButton>
                 </div>
@@ -178,6 +284,132 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
           </Grid>
         </Grid>
       </Grid>
+      {showSharingModal && (
+        <Modal
+          disablePortal
+          disableEnforceFocus
+          disableAutoFocus
+          open
+          aria-labelledby="server-modal-title"
+          aria-describedby="server-modal-description"
+          className={classes.modal}
+          // container={() => rootRef.current}
+        >
+          <div className={classes.modal_content}>
+            <Grid
+              container
+              justify="center"
+              direction="column"
+              alignItems="center"
+              spacing={4}
+            >
+              <Grid item container justify="flex-end">
+                <IconButton
+                  color="primary"
+                  onClick={() => {
+                    setShowSharingModal(false);
+                  }}
+                >
+                  <CloseTwoTone />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <Typography variant={"h2"}>
+                  Teile diese Information mit der Welt
+                </Typography>
+              </Grid>
+              <Grid item>
+                <ul>
+                  <li>
+                    <Typography variant={"body1"}>
+                      <Link
+                        onClick={() => {
+                          onFacebook();
+                        }}
+                      >
+                        Facebook
+                      </Link>
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant={"body1"}>
+                      <Link onClick={() => {}}>Facebook Messenger</Link>
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant={"body1"}>
+                      <Link
+                        onClick={() => {
+                          onTwitter("");
+                        }}
+                      >
+                        Twitter
+                      </Link>
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant={"body1"}>
+                      <Link
+                        onClick={() => {
+                          onWhatsapp("");
+                        }}
+                      >
+                        Whatsapp Messenger
+                      </Link>
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant={"body1"}>
+                      <Link onClick={() => {}}>LinkedIn</Link>
+                    </Typography>
+                  </li>
+                </ul>
+              </Grid>
+              <Grid
+                item
+                container
+                direction="row"
+                justify="space-evenly"
+                alignItems="center"
+                spacing={2}
+              >
+                <Grid item xs={7} alignContent="center">
+                  <TextField
+                    className={classes.inputfield}
+                    id="shareLink"
+                    label="Teile diesen Link"
+                    defaultValue={getShareLink()}
+                    variant="outlined"
+                    inputProps={{
+                      readOnly: true
+                    }}
+                  />
+                </Grid>
+                {/* <Grid item xs={3} alignContent="center">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={[classes.pill, classes.cta].join(" ")}
+                    onClick={() => {  }}
+                    disableElevation
+                  >
+                    Link Kopieren
+                  </Button>
+                </Grid> */}
+              </Grid>
+              <Grid item>
+                <a href="https://wirvsvirushackathon.org/">
+                  <img
+                    src="https://wirvsvirushackathon.org/wp-content/uploads/2020/03/12-scaled.jpg"
+                    alt="Initiiert durch WirVsVirus"
+                    className={classes.logo}
+                  />
+                </a>
+              </Grid>
+            </Grid>
+          </div>
+        </Modal>
+      )}
     </section>
   );
 };
