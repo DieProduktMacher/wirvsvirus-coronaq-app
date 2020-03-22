@@ -154,6 +154,7 @@ export const FunctionalAutocomplete = withStyles(styles)(
           );
 
           getExistingQuestion(matchingQuestions[0]);
+          actions.setQuestion(value);
           setBlockSearch(true);
         }}
         onBlur={(event: any) => {
