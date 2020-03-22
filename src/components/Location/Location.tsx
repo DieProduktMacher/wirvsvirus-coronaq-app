@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useState, ChangeEvent } from "react";
+import React, {
+  FunctionComponent,
+  useState,
+  ChangeEvent,
+  useEffect
+} from "react";
 import {
   Grid,
   TextField,
@@ -16,11 +21,11 @@ import {
 import { useHistory } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import { useTranslation } from "react-i18next";
-import { useContextState } from "../App/Context";
+import { useAppState } from "../App/State";
 
 const styles = () =>
   createStyles({
-    searchAddress: {
+    searchlocation: {
       minWidth: "300px"
     }
   });
@@ -28,11 +33,15 @@ const styles = () =>
 const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
   classes
 }) => {
-  const [state, actions] = useContextState();
+  const [state, actions] = useAppState();
 
-  const [addresses, setAddresses] = useState<googleMapsGeocodeResponse>([]);
+  useEffect(() => {
+    actions.setStep(1);
+  }, [actions]);
+
+  const [locations, setLocations] = useState<googleMapsGeocodeResponse>([]);
   const [formattedAddress, setFormattedAddress] = useState<string | undefined>(
-    state.address ? state.address.formatted_address : ""
+    state.location ? state.location.formatted_address : ""
   );
 
   const history = useHistory();
@@ -40,7 +49,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
 
   const getGeolocation = () => {
     navigator.geolocation.getCurrentPosition(position => {
-      searchForAddress(
+      searchForLocation(
         "latlng",
         `${position.coords.latitude},${position.coords.longitude}`,
         true
@@ -48,19 +57,19 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
     });
   };
 
-  const searchForAddress = (
+  const searchForLocation = (
     method: string,
-    address: string,
+    location: string,
     updateState?: boolean
   ) => {
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?${method}=${address}&key=${process.env.REACT_APP_GOOGLEMAPS_API_KEY}`;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?${method}=${location}&key=${process.env.REACT_APP_GOOGLEMAPS_API_KEY}`;
     axios
       .get(url)
       .then((response: AxiosResponse) => {
-        setAddresses(response.data.results);
+        setLocations(response.data.results);
 
         if (updateState) {
-          actions.setAddress(response.data.results[0]);
+          actions.setLocation(response.data.results[0]);
           setFormattedAddress(response.data.results[0].formatted_address);
         }
       })
@@ -84,29 +93,29 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
           </Grid>
           <Grid item container justify="center">
             <Autocomplete
-              className={classes.searchAddress}
+              className={classes.searchlocation}
               freeSolo
               value={formattedAddress}
-              options={addresses.map(
+              options={locations.map(
                 (address: googleMapsGeocodeEntry) => address.formatted_address
               )}
               renderInput={params => (
                 <TextField
                   {...params}
-                  label={t("location:address_input")}
+                  label={t("location:input_location")}
                   variant="outlined"
                   onChange={event =>
-                    searchForAddress("address", event.target.value)
+                    searchForLocation("address", event.target.value)
                   }
                 />
               )}
               onChange={(event: ChangeEvent<any>) =>
-                actions.setAddress(addresses[event.target.value])
+                actions.setLocation(locations[event.target.value])
               }
             />
           </Grid>
           <Grid item container justify="center">
-            <Button color="secondary" onClick={getGeolocation}>
+            <Button color="primary" onClick={getGeolocation}>
               {t("location:geolocation")}
             </Button>
           </Grid>
@@ -120,11 +129,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
             </Button>
           </Grid>
           <Grid item container justify="center">
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => history.push("/home")}
-            >
+            <Button color="primary" onClick={() => history.push("/home")}>
               {t("back")}
             </Button>
           </Grid>

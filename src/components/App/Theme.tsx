@@ -38,9 +38,9 @@ const palette: PaletteOptions = {
     white: "#ffffff"
   },
   primary: {
-    main: "#0078ca",
-    light: "#24A1DF",
-    dark: "#00325a"
+    main: "#A60063",
+    light: "#DB0083",
+    dark: "#83004E"
   },
   secondary: {
     light: "#ff7076",
@@ -94,11 +94,21 @@ const overrides: Overrides = {
     head: {
       fontSize: 14
     }
+  },
+  MuiTypography: {
+    subtitle1: {
+      textTransform: "uppercase"
+    }
+  },
+  MuiLinearProgress: {
+    colorPrimary: {
+      backgroundColor: "#DDDDDD"
+    }
   }
 };
 
 const typography = {
-  fontFamily: ['"Karla"', "Helvetica", "Roboto", "sans-serif"].join(","),
+  fontFamily: ['"Noto Sans"', "Helvetica", "Roboto", "sans-serif"].join(","),
   useNextVariants: true,
   htmlFontSize: 16,
   fontSize: 16,
@@ -111,26 +121,35 @@ const typography = {
     lineHeight: 1.33
   },
   h1: {
-    fontSize: 50,
-    lineHeight: 1.33
+    fontFamily: ['"Oxygen"', "Helvetica", "Roboto", "sans-serif"].join(","),
+    fontSize: 48,
+    lineHeight: 1.33,
+    fontWeight: 700
   },
   h2: {
+    fontFamily: ['"Oxygen"', "Helvetica", "Roboto", "sans-serif"].join(","),
     fontSize: 32,
     lineHeight: 1.33
   },
   h3: {
+    fontFamily: ['"Oxygen"', "Helvetica", "Roboto", "sans-serif"].join(","),
     fontSize: 24,
     lineHeight: 1.33
   },
   h4: {
+    fontFamily: ['"Oxygen"', "Helvetica", "Roboto", "sans-serif"].join(","),
     fontSize: 18,
     fontWeight: 700,
     lineHeight: 1.33
   },
   h5: {
+    fontFamily: ['"Oxygen"', "Helvetica", "Roboto", "sans-serif"].join(","),
     fontSize: 16,
     fontWeight: 700,
     lineHeight: 1.33
+  },
+  subtitle1: {
+    fontWeight: 700
   }
 };
 const defaultSettings: ThemeSettings = {
@@ -139,6 +158,5 @@ const defaultSettings: ThemeSettings = {
   typography
 };
 
-export default function createTheme(settings = defaultSettings) {
-  return createMuiTheme({ ...settings, ...status });
-}
+export const createTheme = (settings = defaultSettings) =>
+  createMuiTheme({ ...settings, ...status });

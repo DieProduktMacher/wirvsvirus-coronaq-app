@@ -1,59 +1,12 @@
-* {
-  box-sizing: border-box;
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans:400,700|Oxygen:300,700&display=swap&subset=latin-ext");
+
+h1 em {
+  font-style: normal;
+  font-weight: 300;
 }
 
-.page-container {
-  max-width: 1024px;
-  margin: 0 auto;
-}
-
-.page-header {
-  height: 96px;
-}
-
-.page-header {
-  border-bottom: 5px solid gainsboro;
-}
-
-.page-footer {
-  height: 32px;
-}
-
-.page-header::after,
-.page-footer::after {
-  content: "";
-  clear: both;
-  display: block;
-}
-
-.page-header::after {
-  width: 15%;
-  height: 5px;
-  background-color: #a60063;
-}
-
-.page-header__container {
-  height: 100%;
-  padding: 1em 2em;
-}
-
-.page-header__logo-coronaq,
-.page-header__logo-bmg,
-.page-footer__logo-wirvsvirus {
-  display: block;
-  height: 100%;
-}
-
-.page-header__logo-coronaq {
-  float: left;
-}
-
-.page-header__logo-bmg,
-.page-footer__logo-wirvsvirus {
-  float: right;
-}
-
-.page-main {
-  min-height: 320px;
-  padding: 1em 2em;
+.MuiButton-contained.button__cta {
+  border-radius: 20px;
+  box-shadow: none;
+  text-transform: uppercase;
 }

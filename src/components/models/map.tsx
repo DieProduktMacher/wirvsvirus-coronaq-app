@@ -1,7 +1,7 @@
 export type googleMapsGeocodeResponse = Array<googleMapsGeocodeEntry>;
 
 export interface googleMapsGeocodeEntry {
-  address_components: Array<{
+  location_components: Array<{
     long_name: string;
     short_name: string;
     types: Array<string>;
