@@ -2,9 +2,9 @@ export interface question {
   answer: {
     de: string;
   };
-  answeredAt?: string;
+  answeredAt?: firebase.firestore.Timestamp;
   answeredById?: string;
-  authoredAt?: string;
+  authoredAt?: firebase.firestore.Timestamp;
   authoredById?: string;
   countryCode: string;
   question: {
@@ -17,8 +17,8 @@ export interface question {
   subscriberIds: string[];
   tags: string[];
   topic: string;
-  validFrom?: string;
-  validTo?: string;
+  validFrom?: firebase.firestore.Timestamp;
+  validTo?: firebase.firestore.Timestamp;
 }
 
 export interface SearchQueryResult {
@@ -51,37 +51,3 @@ export interface SubQuery {
     [key: string]: any;
   };
 }
-
-// enum QueryFieldName {
-//   countryCode,
-//   municipality,
-//   query,
-//   region,
-//   source,
-//   state,
-//   tags,
-//   topic
-// }
-
-export const emptyQuestion = {
-  answer: {
-    de: ""
-  },
-  answeredAt: "",
-  answeredById: "",
-  authoredAt: "",
-  authoredById: "",
-  countryCode: "",
-  question: {
-    de: ""
-  },
-  region: "",
-  sourceTitle: "",
-  sourceUrl: "",
-  state: "",
-  subscriberIds: [],
-  tags: [],
-  topic: "",
-  validFrom: "",
-  validTo: ""
-} as question;

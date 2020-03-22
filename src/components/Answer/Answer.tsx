@@ -185,7 +185,8 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
                   <Typography variant={"subtitle1"}>
                     {t("answer:main:notification")}
                   </Typography>
-                  {answers.length > 0 && (
+                  {/* firebase timestamps */}
+                  {/* {answers.length > 0 && (
                     <Typography variant="caption">
                       {answers[0].data.answeredAt &&
                         `${t("answer:main:answeredAt")}: ${
@@ -196,7 +197,7 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
                           answers[0].data.validTo
                         }`}
                     </Typography>
-                  )}
+                  )} */}
                 </Grid>
                 <Grid
                   item
