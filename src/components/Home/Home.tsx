@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { Button, Grid, Typography } from "@material-ui/core";
 import { useAppState } from "../App/State";
 import { useHistory } from "react-router-dom";
+import NavigationButtons from "../NavigationButton/NavigationButtons";
+import routes from "../App/Routes";
 
 export const Home = () => {
   const { t } = useTranslation();
@@ -40,16 +42,10 @@ export const Home = () => {
             <li>{t("home:list:get_answer")}</li>
           </ul>
         </Grid>
-        <Grid item container justify="center">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={nextStep}
-            disableElevation
-          >
-            {t("home:start")}
-          </Button>
-        </Grid>
+        <NavigationButtons
+          isStart={true}
+          next={{ path: routes.location.path, title: "home:start" }}
+        />
       </Grid>
     </section>
   );

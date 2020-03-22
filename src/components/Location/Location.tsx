@@ -19,10 +19,12 @@ import {
   googleMapsGeocodeResponse,
   googleMapsGeocodeEntry
 } from "../models/map";
-import { useHistory } from "react-router-dom";
+
 import axios, { AxiosResponse } from "axios";
 import { useTranslation } from "react-i18next";
 import { useAppState } from "../App/State";
+import routes from "../App/Routes";
+import NavigationButtons from "../NavigationButton/NavigationButtons";
 
 const styles = () =>
   createStyles({
@@ -45,7 +47,6 @@ const Location: FunctionComponent<WithStyles<typeof styles>> = ({
     state.location ? state.location.formatted_address : ""
   );
 
-  const history = useHistory();
   const { t } = useTranslation();
 
   const getGeolocation = () => {
@@ -124,21 +125,10 @@ const Location: FunctionComponent<WithStyles<typeof styles>> = ({
               {t("location:geolocation")}
             </Button>
           </Grid>
-          <Grid item container justify="center">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => history.push("/question")}
-            >
-              {t("next")}
-            </Button>
-          </Grid>
-          <Grid item container justify="center">
-            <Button color="primary" onClick={() => history.push("/home")}>
-              {t("back")}
-            </Button>
-          </Grid>
         </Grid>
+        <NavigationButtons
+          next={{ path: routes.question.path, title: "location:next" }}
+        />
       </Grid>
     </section>
   );
