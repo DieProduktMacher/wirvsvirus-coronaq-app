@@ -9,7 +9,6 @@ import { useAppState } from "../App/State";
 import {
   Grid,
   TextField,
-  Typography,
   createStyles,
   withStyles,
   WithStyles
