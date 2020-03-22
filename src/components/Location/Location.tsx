@@ -11,7 +11,8 @@ import {
   Button,
   createStyles,
   withStyles,
-  WithStyles
+  WithStyles,
+  Icon
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import {
@@ -115,7 +116,11 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
             />
           </Grid>
           <Grid item container justify="center">
-            <Button color="primary" onClick={getGeolocation}>
+            <Button
+              color="primary"
+              onClick={getGeolocation}
+              startIcon={<Icon>gps_fixed</Icon>}
+            >
               {t("location:geolocation")}
             </Button>
           </Grid>
