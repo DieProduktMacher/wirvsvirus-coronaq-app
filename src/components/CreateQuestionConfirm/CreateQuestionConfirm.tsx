@@ -1,6 +1,4 @@
-import React, {
-  FunctionComponent
-} from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import {
   withStyles,
   WithStyles,
@@ -10,6 +8,7 @@ import {
   Button
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { useAppState } from "../App/State";
 
 const styles = () =>
   createStyles({
@@ -29,9 +28,16 @@ const styles = () =>
     }
   });
 
-const CreateQuestionConfirm: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
+const CreateQuestionConfirm: FunctionComponent<WithStyles<typeof styles>> = ({
+  classes
+}) => {
   // const { t } = useTranslation();
+  const [, actions] = useAppState();
   const history = useHistory();
+
+  useEffect(() => {
+    actions.setStep(6);
+  }, [actions]);
 
   return (
     <section>
@@ -55,15 +61,14 @@ const CreateQuestionConfirm: FunctionComponent<WithStyles<typeof styles>> = ({ c
         </Grid>
 
         <Grid item container justify={"center"}>
-          <Typography variant={"h1"}>
-            Vielen Dank!
-          </Typography>
+          <Typography variant={"h1"}>Vielen Dank!</Typography>
         </Grid>
 
         <Grid item>
           <Typography variant={"body1"}>
-            Wir haben deine Frage weitergeleitet.
-            Sobald die zuständige Behörde deine Frage beantwortet hat, wirst du automatisch per E-Mail benachrichtigt.
+            Wir haben deine Frage weitergeleitet. Sobald die zuständige Behörde
+            deine Frage beantwortet hat, wirst du automatisch per E-Mail
+            benachrichtigt.
           </Typography>
         </Grid>
         <Grid item>
@@ -71,7 +76,7 @@ const CreateQuestionConfirm: FunctionComponent<WithStyles<typeof styles>> = ({ c
             variant="contained"
             color="primary"
             className={[classes.pill, classes.cta].join(" ")}
-            onClick={() => history.push('/question')}
+            onClick={() => history.push("/question")}
             disableElevation
           >
             Weiter suchen

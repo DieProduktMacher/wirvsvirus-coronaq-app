@@ -56,7 +56,7 @@ const relatedQuestions = [
 const CreateQuestion: FunctionComponent<WithStyles<typeof styles>> = ({
   classes
 }) => {
-  const [state] = useAppState();
+  const [state, actions] = useAppState();
   const { t } = useTranslation();
   const history = useHistory();
   const firebase = useContext(FirebaseContext);
@@ -66,6 +66,10 @@ const CreateQuestion: FunctionComponent<WithStyles<typeof styles>> = ({
   const [newQuestion, setNewQuestion] = useState<string>("");
   const [questionDetails, setQuestionDetails] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+
+  useEffect(() => {
+    actions.setStep(5);
+  }, [actions]);
 
   useEffect(() => {
     state.question && setQuestion(state.question);
