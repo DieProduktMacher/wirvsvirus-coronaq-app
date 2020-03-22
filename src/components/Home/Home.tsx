@@ -1,11 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
-import { Grid, Typography } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  createStyles,
+  WithStyles,
+  withStyles
+} from "@material-ui/core";
 import { useAppState } from "../App/State";
 import StepNavigation from "../StepNavigation/StepNavigation";
 import routes from "../App/Routes";
+import StepIcon from "../StepIcon/StepIcon";
 
-export const Home = () => {
+const styles = () =>
+  createStyles({
+    stepsList: {
+      listStyleType: "none",
+      paddingInlineStart: "0px"
+    }
+  });
+
+const Home: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
   const { t } = useTranslation();
 
   const [, actions] = useAppState();
@@ -29,10 +44,37 @@ export const Home = () => {
           <Typography variant="subtitle1">{t("home:how_it_works")}</Typography>
         </Grid>
         <Grid item container justify="center">
-          <ul>
-            <li>{t("home:list:select_region")}</li>
-            <li>{t("home:list:pose_question")}</li>
-            <li>{t("home:list:get_answer")}</li>
+          <ul className={classes.stepsList}>
+            <li>
+              <Grid container direction="row" justify="flex-start" spacing={2}>
+                <Grid item>
+                  <StepIcon icon="gps_fixed" />
+                </Grid>
+                <Grid item container xs alignItems="center">
+                  <strong>{t("home:list:select_region")}</strong>
+                </Grid>
+              </Grid>
+            </li>
+            <li>
+              <Grid container direction="row" justify="flex-start" spacing={2}>
+                <Grid item>
+                  <StepIcon icon="textsms" />
+                </Grid>
+                <Grid item container xs alignItems="center">
+                  <strong>{t("home:list:pose_question")}</strong>
+                </Grid>
+              </Grid>
+            </li>
+            <li>
+              <Grid container direction="row" justify="flex-start" spacing={2}>
+                <Grid item>
+                  <StepIcon icon="email" />
+                </Grid>
+                <Grid item container xs alignItems="center">
+                  <strong>{t("home:list:get_answer")}</strong>
+                </Grid>
+              </Grid>
+            </li>
           </ul>
         </Grid>
         <StepNavigation
@@ -43,3 +85,5 @@ export const Home = () => {
     </section>
   );
 };
+
+export default withStyles(styles)(Home);

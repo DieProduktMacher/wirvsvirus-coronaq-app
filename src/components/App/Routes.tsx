@@ -1,7 +1,7 @@
 import Location from "../Location/Location";
 import Question from "../Question/Question";
 import Answer from "../Answer/Answer";
-import { Home } from "../Home/Home";
+import Home from "../Home/Home";
 import Route from "./Route";
 
 export const routes = {
