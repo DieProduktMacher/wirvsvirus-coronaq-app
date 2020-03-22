@@ -5,9 +5,3 @@ h1 em {
   font-style: normal;
   font-weight: 300;
 }
-
-.MuiButton-contained.button__cta {
-  border-radius: 20px;
-  box-shadow: none;
-  text-transform: uppercase;
-}

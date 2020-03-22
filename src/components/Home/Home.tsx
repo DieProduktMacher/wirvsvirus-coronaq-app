@@ -45,7 +45,7 @@ export const Home = () => {
             variant="contained"
             color="primary"
             onClick={nextStep}
-            className="button__cta"
+            disableElevation
           >
             {t("home:start")}
           </Button>
