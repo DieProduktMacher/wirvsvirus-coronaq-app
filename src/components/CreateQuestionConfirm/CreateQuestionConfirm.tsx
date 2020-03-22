@@ -37,7 +37,7 @@ const CreateQuestionConfirm: FunctionComponent<WithStyles<typeof styles>> = ({ c
     <section>
       <Grid
         container
-        direction="row"
+        direction="column"
         justify="center"
         alignItems="center"
         spacing={10}
@@ -76,6 +76,11 @@ const CreateQuestionConfirm: FunctionComponent<WithStyles<typeof styles>> = ({ c
           >
             Weiter suchen
           </Button>
+        </Grid>
+        <Grid item container justify={"center"}>
+          <Typography variant={"subtitle1"}>
+            Relevante Artikel aus geprüften Quellen zu deinem Thema
+          </Typography>
         </Grid>
       </Grid>
     </section>
