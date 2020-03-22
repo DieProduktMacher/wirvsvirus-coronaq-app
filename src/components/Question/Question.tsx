@@ -18,7 +18,8 @@ import {
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useTranslation } from "react-i18next";
 import { Context as FirebaseContext } from "../../services/Firebase";
-import { useHistory } from "react-router-dom";
+import NavigationButtons from "../NavigationButton/NavigationButtons";
+import routes from "../App/Routes";
 
 const styles = () =>
   createStyles({
@@ -32,7 +33,6 @@ const Question: FunctionComponent<WithStyles<typeof styles>> = ({
 }) => {
   const [state, actions] = useAppState();
   const firebase = useContext(FirebaseContext);
-  const history = useHistory();
   const { t } = useTranslation();
 
   const [previousQuestions, setPreviousQuestions] = useState<Array<any>>([]);
@@ -99,15 +99,9 @@ const Question: FunctionComponent<WithStyles<typeof styles>> = ({
               }}
             />
           </Grid>
-          <Grid item container justify="center">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => history.push("/answer")}
-            >
-              {t("next")}
-            </Button>
-          </Grid>
+          <NavigationButtons
+            next={{ route: routes.answer, title: "question:next" }}
+          />
         </Grid>
       </Grid>
       {question}
