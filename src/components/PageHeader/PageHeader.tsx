@@ -7,7 +7,7 @@ import {
   withStyles,
   LinearProgress
 } from "@material-ui/core";
-import { useContextState } from "../App/Context";
+import { useAppState } from "../App/State";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -20,7 +20,7 @@ const styles = (theme: Theme) =>
 const PageHeader: FunctionComponent<WithStyles<typeof styles>> = ({
   classes
 }) => {
-  const [state] = useContextState();
+  const [state] = useAppState();
   return (
     <header>
       <Grid container direction="row" justify="space-between">

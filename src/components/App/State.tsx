@@ -3,7 +3,8 @@ import React, {
   useContext,
   useReducer,
   useEffect,
-  useState
+  useState,
+  useMemo
 } from "react";
 import { googleMapsGeocodeEntry } from "../models/map";
 
@@ -20,33 +21,33 @@ const initialState: State = {
 };
 
 type Action =
-  | { type: "setAddress"; address: googleMapsGeocodeEntry }
-  | { type: "removeAddress" }
+  | { type: "setLocation"; address: googleMapsGeocodeEntry }
+  | { type: "resetLocation" }
   | { type: "setStep"; step: number };
 
 interface actions {
-  setAddress: (address: googleMapsGeocodeEntry) => void;
-  removeAddress: () => void;
+  setLocation: (address: googleMapsGeocodeEntry) => void;
+  resetLocation: () => void;
   setStep: (step: number) => void;
 }
 
-const Context = createContext<[State, actions]>([
+const StateContext = createContext<[State, actions]>([
   initialState,
   {
-    setAddress: address => {},
-    removeAddress: () => {},
+    setLocation: address => {},
+    resetLocation: () => {},
     setStep: step => {}
   }
 ]);
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
-    case "setAddress":
+    case "setLocation":
       return {
         ...state,
         address: action.address
       };
-    case "removeAddress":
+    case "resetLocation":
       return {
         ...state,
         address: null
@@ -61,19 +62,19 @@ const reducer = (state: State, action: Action) => {
   }
 };
 
-export const ContextProvider: React.ComponentType = ({ children }) => {
+export const StateProvider: React.ComponentType = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [loading, setloading] = useState(true);
 
-  const actions = React.useMemo(() => {
+  const actions = useMemo(() => {
     return {
-      setAddress: (address: googleMapsGeocodeEntry) => {
+      setLocation: (address: googleMapsGeocodeEntry) => {
         localStorage.setItem("address", JSON.stringify(address));
-        dispatch({ type: "setAddress", address: address });
+        dispatch({ type: "setLocation", address: address });
       },
-      removeAddress: () => {
+      resetLocation: () => {
         localStorage.removeItem("address");
-        dispatch({ type: "removeAddress" });
+        dispatch({ type: "resetLocation" });
       },
       setStep: (step: number) => {
         dispatch({ type: "setStep", step });
@@ -87,7 +88,7 @@ export const ContextProvider: React.ComponentType = ({ children }) => {
       const address = localStorage.getItem("address");
       if (address && address !== "undefined") {
         dispatch({
-          type: "setAddress",
+          type: "setLocation",
           address: JSON.parse(address)
         });
       }
@@ -97,12 +98,12 @@ export const ContextProvider: React.ComponentType = ({ children }) => {
   }, [dispatch]);
 
   return (
-    <Context.Provider value={[state, actions]}>
+    <StateContext.Provider value={[state, actions]}>
       {loading ? null : children}
-    </Context.Provider>
+    </StateContext.Provider>
   );
 };
 
-export const useContextState = () => {
-  return useContext(Context);
+export const useAppState = () => {
+  return useContext(StateContext);
 };

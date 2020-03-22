@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { useContextState } from "../App/Context";
+import { useAppState } from "../App/State";
 
 export const Question = () => {
-  const [state, actions] = useContextState();
+  const [state, actions] = useAppState();
 
   useEffect(() => {
     actions.setStep(2);

@@ -5,7 +5,7 @@ import "./App.css";
 import { ThemeProvider } from "@material-ui/styles";
 import createTheme from "./createTheme";
 
-import { ContextProvider } from "./Context";
+import { StateProvider } from "./State";
 
 import PageHeader from "../PageHeader/PageHeader";
 import PageMain from "../PageMain/PageMain";
@@ -14,13 +14,13 @@ import PageFooter from "../PageFooter/PageFooter";
 function App() {
   return (
     <ThemeProvider theme={createTheme()}>
-      <ContextProvider>
+      <StateProvider>
         <BrowserRouter>
           <PageHeader />
           <PageMain />
           <PageFooter />
         </BrowserRouter>
-      </ContextProvider>
+      </StateProvider>
     </ThemeProvider>
   );
 }

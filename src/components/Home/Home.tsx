@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Grid, Typography } from "@material-ui/core";
-import { useContextState } from "../App/Context";
+import { useAppState } from "../App/State";
 import { useHistory } from "react-router-dom";
 
 export const Home = () => {
   const { t } = useTranslation();
 
-  const [, actions] = useContextState();
+  const [, actions] = useAppState();
 
   useEffect(() => {
     actions.setStep(0);

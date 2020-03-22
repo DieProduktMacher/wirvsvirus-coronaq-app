@@ -16,7 +16,7 @@ import {
 import { useHistory } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import { useTranslation } from "react-i18next";
-import { useContextState } from "../App/Context";
+import { useAppState } from "../App/State";
 
 const styles = () =>
   createStyles({
@@ -28,7 +28,7 @@ const styles = () =>
 const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
   classes
 }) => {
-  const [state, actions] = useContextState();
+  const [state, actions] = useAppState();
 
   useEffect(() => {
     actions.setStep(1);
@@ -36,7 +36,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
 
   // const [questions, setQuestions] = useState<any>(null);
   // const [isSearching, setIsSearching] = useState(false);
-  const [addresses, setAddresses] = useState<googleMapsGeocodeResponse>([]);
+  const [addresses, setLocationes] = useState<googleMapsGeocodeResponse>([]);
 
   const history = useHistory();
   const { t } = useTranslation();
@@ -60,10 +60,10 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
     axios
       .get(url)
       .then((response: AxiosResponse) => {
-        setAddresses(response.data.results);
+        setLocationes(response.data.results);
 
         if (updateState) {
-          actions.setAddress(response.data.results[0]);
+          actions.setLocation(response.data.results[0]);
         }
       })
       .catch(error => {
@@ -105,7 +105,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
                 />
               )}
               onChange={(event: any) =>
-                actions.setAddress(addresses[event.target.value])
+                actions.setLocation(addresses[event.target.value])
               }
             />
           </Grid>
