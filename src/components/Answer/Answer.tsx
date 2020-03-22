@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 import { useAppState } from "../App/State";
 import { withStyles, WithStyles, createStyles } from "@material-ui/core";
 
@@ -12,7 +12,7 @@ const styles = () =>
 
 const Answer: FunctionComponent<WithStyles<typeof styles>> = () => {
   const [state, actions] = useAppState();
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   useEffect(() => {
     actions.setStep(3);

@@ -2,8 +2,8 @@ import React, {
   FunctionComponent,
   useEffect,
   useState,
-  ChangeEvent,
-  useContext
+  ChangeEvent
+  // useContext
 } from "react";
 import { useAppState } from "../App/State";
 import {
@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useTranslation } from "react-i18next";
-import { Context as FirebaseContext } from "../../services/Firebase";
+// import { Context as FirebaseContext } from "../../services/Firebase";
 import StepNavigation from "../StepNavigation/StepNavigation";
 import routes from "../App/Routes";
 
@@ -30,11 +30,11 @@ const styles = () =>
 const Question: FunctionComponent<WithStyles<typeof styles>> = ({
   classes
 }) => {
-  const [state, actions] = useAppState();
-  const firebase = useContext(FirebaseContext);
+  const [, actions] = useAppState();
+  // const firebase = useContext(FirebaseContext);
   const { t } = useTranslation();
 
-  const [previousQuestions, setPreviousQuestions] = useState<Array<any>>([]);
+  const [previousQuestions] = useState<Array<any>>([]);
   const [question, setQuestion] = useState<string>("");
 
   useEffect(() => {
