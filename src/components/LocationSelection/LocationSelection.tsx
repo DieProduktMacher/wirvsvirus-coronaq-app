@@ -37,7 +37,6 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
   // const [questions, setQuestions] = useState<any>(null);
   // const [isSearching, setIsSearching] = useState(false);
   const [addresses, setAddresses] = useState<googleMapsGeocodeResponse>([]);
-  const [currentAddress, setCurrentAddress] = useState(state.address);
 
   const history = useHistory();
   const { t } = useTranslation();
@@ -65,7 +64,6 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
 
         if (updateState) {
           actions.setAddress(response.data.results[0]);
-          setCurrentAddress(response.data.results[0]);
         }
       })
       .catch(error => {
@@ -90,8 +88,8 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
             <Autocomplete
               className={classes.searchAddress}
               freeSolo
-              defaultValue={
-                currentAddress ? currentAddress.formatted_address : undefined
+              value={
+                state.address ? state.address.formatted_address : undefined
               }
               options={addresses.map(
                 (address: googleMapsGeocodeEntry) => address.formatted_address
