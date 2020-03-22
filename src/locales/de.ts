@@ -16,7 +16,7 @@ export const de = {
     },
     location: {
       headline: "Region festlegen",
-      address_input: "Ort eingeben",
+      input_location: "Ort eingeben",
       geolocation: "Eigenen Standort verwenden"
     }
   }

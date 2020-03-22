@@ -11,7 +11,7 @@ export const Question = () => {
   return (
     <div className="question">
       question
-      <div>address: {state.address?.formatted_address}</div>
+      <div>location: {state.location?.formatted_address}</div>
     </div>
   );
 };

@@ -11,22 +11,22 @@ import { googleMapsGeocodeEntry } from "../models/map";
 const NUMBER_OF_STEPS = 5;
 
 interface State {
-  address: googleMapsGeocodeEntry | null;
+  location: googleMapsGeocodeEntry | null;
   progress: number;
 }
 
 const initialState: State = {
-  address: null,
+  location: null,
   progress: 0
 };
 
 type Action =
-  | { type: "setLocation"; address: googleMapsGeocodeEntry }
+  | { type: "setLocation"; location: googleMapsGeocodeEntry }
   | { type: "resetLocation" }
   | { type: "setStep"; step: number };
 
 interface actions {
-  setLocation: (address: googleMapsGeocodeEntry) => void;
+  setLocation: (location: googleMapsGeocodeEntry) => void;
   resetLocation: () => void;
   setStep: (step: number) => void;
 }
@@ -34,7 +34,7 @@ interface actions {
 const StateContext = createContext<[State, actions]>([
   initialState,
   {
-    setLocation: address => {},
+    setLocation: location => {},
     resetLocation: () => {},
     setStep: step => {}
   }
@@ -45,12 +45,12 @@ const reducer = (state: State, action: Action) => {
     case "setLocation":
       return {
         ...state,
-        address: action.address
+        location: action.location
       };
     case "resetLocation":
       return {
         ...state,
-        address: null
+        location: null
       };
     case "setStep":
       return {
@@ -68,12 +68,12 @@ export const StateProvider: React.ComponentType = ({ children }) => {
 
   const actions = useMemo(() => {
     return {
-      setLocation: (address: googleMapsGeocodeEntry) => {
-        localStorage.setItem("address", JSON.stringify(address));
-        dispatch({ type: "setLocation", address: address });
+      setLocation: (location: googleMapsGeocodeEntry) => {
+        localStorage.setItem("location", JSON.stringify(location));
+        dispatch({ type: "setLocation", location: location });
       },
       resetLocation: () => {
-        localStorage.removeItem("address");
+        localStorage.removeItem("location");
         dispatch({ type: "resetLocation" });
       },
       setStep: (step: number) => {
@@ -85,11 +85,11 @@ export const StateProvider: React.ComponentType = ({ children }) => {
   // get inital login status
   useEffect(() => {
     (async () => {
-      const address = localStorage.getItem("address");
-      if (address && address !== "undefined") {
+      const location = localStorage.getItem("location");
+      if (location && location !== "undefined") {
         dispatch({
           type: "setLocation",
-          address: JSON.parse(address)
+          location: JSON.parse(location)
         });
       }
 

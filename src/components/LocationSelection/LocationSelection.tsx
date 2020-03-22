@@ -20,7 +20,7 @@ import { useAppState } from "../App/State";
 
 const styles = () =>
   createStyles({
-    searchAddress: {
+    searchlocation: {
       minWidth: "300px"
     }
   });
@@ -36,14 +36,14 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
 
   // const [questions, setQuestions] = useState<any>(null);
   // const [isSearching, setIsSearching] = useState(false);
-  const [addresses, setLocationes] = useState<googleMapsGeocodeResponse>([]);
+  const [locations, setLocations] = useState<googleMapsGeocodeResponse>([]);
 
   const history = useHistory();
   const { t } = useTranslation();
 
   const getGeolocation = () => {
     navigator.geolocation.getCurrentPosition(position => {
-      searchForAddress(
+      searchForLocation(
         "latlng",
         `${position.coords.latitude},${position.coords.longitude}`,
         true
@@ -51,16 +51,16 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
     });
   };
 
-  const searchForAddress = (
+  const searchForLocation = (
     method: string,
-    address: string,
+    location: string,
     updateState?: boolean
   ) => {
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?${method}=${address}&key=${process.env.REACT_APP_GOOGLEMAPS_API_KEY}`;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?${method}=${location}&key=${process.env.REACT_APP_GOOGLEMAPS_API_KEY}`;
     axios
       .get(url)
       .then((response: AxiosResponse) => {
-        setLocationes(response.data.results);
+        setLocations(response.data.results);
 
         if (updateState) {
           actions.setLocation(response.data.results[0]);
@@ -86,31 +86,31 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
           </Grid>
           <Grid item container justify="center">
             <Autocomplete
-              className={classes.searchAddress}
+              className={classes.searchlocation}
               freeSolo
               value={
-                state.address ? state.address.formatted_address : undefined
+                state.location ? state.location.formatted_address : undefined
               }
-              options={addresses.map(
-                (address: googleMapsGeocodeEntry) => address.formatted_address
+              options={locations.map(
+                (location: googleMapsGeocodeEntry) => location.formatted_address
               )}
               renderInput={params => (
                 <TextField
                   {...params}
-                  label={t("location:address_input")}
+                  label={t("location:input_location")}
                   variant="outlined"
                   onChange={event =>
-                    searchForAddress("address", event.target.value)
+                    searchForLocation("address", event.target.value)
                   }
                 />
               )}
               onChange={(event: any) =>
-                actions.setLocation(addresses[event.target.value])
+                actions.setLocation(locations[event.target.value])
               }
             />
           </Grid>
           <Grid item container justify="center">
-            <Button color="secondary" onClick={getGeolocation}>
+            <Button color="primary" onClick={getGeolocation}>
               {t("location:geolocation")}
             </Button>
           </Grid>
@@ -124,11 +124,7 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
             </Button>
           </Grid>
           <Grid item container justify="center">
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => history.push("/home")}
-            >
+            <Button color="primary" onClick={() => history.push("/home")}>
               {t("back")}
             </Button>
           </Grid>

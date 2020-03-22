@@ -34,7 +34,7 @@ const PageHeader: FunctionComponent<WithStyles<typeof styles>> = ({
               />
             </Grid>
             <Grid item>
-              {state.address ? state.address.formatted_address : ""}
+              {state.location ? state.location.formatted_address : ""}
             </Grid>
           </Grid>
         </Grid>
