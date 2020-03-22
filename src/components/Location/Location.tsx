@@ -31,7 +31,7 @@ const styles = () =>
     }
   });
 
-const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
+const Location: FunctionComponent<WithStyles<typeof styles>> = ({
   classes
 }) => {
   const [state, actions] = useAppState();
@@ -144,4 +144,4 @@ const LocationSelection: FunctionComponent<WithStyles<typeof styles>> = ({
   );
 };
 
-export default withStyles(styles)(LocationSelection);
+export default withStyles(styles)(Location);
