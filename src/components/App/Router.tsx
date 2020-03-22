@@ -3,8 +3,8 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import routes from "./routesConfig";
 
 import LocationSelection from "../Location/Location";
-import { Question } from "../Question/Question";
-import { Answer } from "../Answer/Answer";
+import Question from "../Question/Question";
+import Answer from "../Answer/Answer";
 import { Home } from "../Home/Home";
 
 const Router = () => {

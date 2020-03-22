@@ -18,6 +18,10 @@ export const de = {
       headline: "Region festlegen",
       input_location: "Ort eingeben",
       geolocation: "Eigenen Standort verwenden"
+    },
+    question: {
+      headline: "Frage stellen",
+      input_question: "Was interessiert dich"
     }
   }
 };

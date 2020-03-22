@@ -7,28 +7,33 @@ import React, {
   useMemo
 } from "react";
 import { googleMapsGeocodeEntry } from "../models/map";
+import { question, emptyQuestion } from "../models/question";
 
 const NUMBER_OF_STEPS = 5;
 
 interface State {
   location: googleMapsGeocodeEntry | null;
   progress: number;
+  question: string | null;
 }
 
 const initialState: State = {
   location: null,
-  progress: 0
+  progress: 0,
+  question: null
 };
 
 type Action =
   | { type: "setLocation"; location: googleMapsGeocodeEntry }
   | { type: "resetLocation" }
-  | { type: "setStep"; step: number };
+  | { type: "setStep"; step: number }
+  | { type: "setQuestion"; question: string };
 
 interface actions {
   setLocation: (location: googleMapsGeocodeEntry) => void;
   resetLocation: () => void;
   setStep: (step: number) => void;
+  setQuestion: (question: string) => void;
 }
 
 const StateContext = createContext<[State, actions]>([
@@ -36,7 +41,8 @@ const StateContext = createContext<[State, actions]>([
   {
     setLocation: location => {},
     resetLocation: () => {},
-    setStep: step => {}
+    setStep: step => {},
+    setQuestion: string => {}
   }
 ]);
 
@@ -56,6 +62,11 @@ const reducer = (state: State, action: Action) => {
       return {
         ...state,
         progress: Math.ceil((100 * action.step) / NUMBER_OF_STEPS)
+      };
+    case "setQuestion":
+      return {
+        ...state,
+        question: action.question
       };
     default:
       return state;
@@ -78,6 +89,10 @@ export const StateProvider: React.ComponentType = ({ children }) => {
       },
       setStep: (step: number) => {
         dispatch({ type: "setStep", step });
+      },
+      setQuestion: (question: string) => {
+        localStorage.setItem("question", JSON.stringify(question));
+        dispatch({ type: "setQuestion", question });
       }
     };
   }, [dispatch]);
@@ -90,6 +105,14 @@ export const StateProvider: React.ComponentType = ({ children }) => {
         dispatch({
           type: "setLocation",
           location: JSON.parse(location)
+        });
+      }
+
+      const question = localStorage.getItem("question");
+      if (question && question !== "undefined") {
+        dispatch({
+          type: "setQuestion",
+          question: JSON.parse(question)
         });
       }
 
