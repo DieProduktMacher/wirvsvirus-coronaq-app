@@ -120,7 +120,14 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
                     </Typography>
                   )}
                 </Grid>
-                <Grid container xs={12} md={10} direction="column" spacing={4}>
+                <Grid
+                  item
+                  container
+                  xs={12}
+                  md={10}
+                  direction="column"
+                  spacing={4}
+                >
                   <Grid item container>
                     <Typography variant={"h1"}>
                       {answers.length > 0 && answers[0].data.question.de}
@@ -189,7 +196,7 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
           <Grid item>
             <StepNavigation
               next={{
-                route: routes.answer,
+                route: routes.createQuestion,
                 title: "question:submit_question",
                 disabled: !state.location
               }}

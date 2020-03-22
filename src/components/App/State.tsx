@@ -129,7 +129,6 @@ export const StateProvider: React.ComponentType = ({ children }) => {
 
       const question = localStorage.getItem("question");
       if (question && question !== "undefined") {
-        console.log("setquestion", question);
         dispatch({
           type: "setQuestion",
           question: JSON.parse(question)
