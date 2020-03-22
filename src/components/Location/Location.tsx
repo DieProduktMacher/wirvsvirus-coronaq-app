@@ -7,7 +7,6 @@ import React, {
 import {
   Grid,
   TextField,
-  Typography,
   Button,
   createStyles,
   withStyles,
@@ -25,6 +24,7 @@ import { useTranslation } from "react-i18next";
 import { useAppState } from "../App/State";
 import routes from "../App/Routes";
 import StepNavigation from "../StepNavigation/StepNavigation";
+import StepHeader from "../StepHeader/StepHeader";
 
 const styles = () =>
   createStyles({
@@ -96,9 +96,7 @@ const Location: FunctionComponent<WithStyles<typeof styles>> = ({
         alignItems="center"
       >
         <Grid container direction="column" spacing={5}>
-          <Grid item container justify="center">
-            <Typography variant="h1">{t("location:headline")}</Typography>
-          </Grid>
+          <StepHeader headline="location:headline" icon="gps_fixed" />
           <Grid item container justify="center">
             <Autocomplete
               className={classes.searchlocation}

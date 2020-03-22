@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 // import { Context as FirebaseContext } from "../../services/Firebase";
 import StepNavigation from "../StepNavigation/StepNavigation";
 import routes from "../App/Routes";
+import StepHeader from "../StepHeader/StepHeader";
 
 const styles = () =>
   createStyles({
@@ -72,9 +73,7 @@ const Question: FunctionComponent<WithStyles<typeof styles>> = ({
         alignItems="center"
       >
         <Grid container direction="column" spacing={5}>
-          <Grid item container justify="center">
-            <Typography variant="h1">{t("question:headline")}</Typography>
-          </Grid>
+          <StepHeader headline="question:headline" icon="textsms" />
           <Grid item container justify="center">
             <Autocomplete
               className={classes.searchlocation}

@@ -5,36 +5,39 @@ import {
   createStyles,
   WithStyles,
   withStyles,
-  Button
+  Typography
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
-import Route from "../App/Route";
+import StepIcon from "../StepIcon/StepIcon";
 
-const styles = (theme: Theme) =>
-  createStyles({
-    pill: {
-      borderRadius: "20px",
-      paddingLeft: "24px",
-      paddingRight: "24px",
-      minWidth: "192px"
-    },
-    cta: {
-      textTransform: "uppercase"
-    }
-  });
+const styles = (theme: Theme) => createStyles({});
 
 interface Props extends WithStyles<typeof styles> {
-  title: string;
+  headline: string;
   icon?: string;
 }
 
-const StepHeader: FunctionComponent<Props> = ({ classes, title, icon }) => {
+const StepHeader: FunctionComponent<Props> = ({
+  classes,
+  headline: title,
+  icon
+}) => {
   const { t } = useTranslation();
 
+  const iconBlock = icon ? (
+    <Grid item container justify="center">
+      <StepIcon icon={icon} />
+    </Grid>
+  ) : (
+    ""
+  );
+
   return (
-    <Grid item container direction="column" spacing={5}>
-      <Grid item container justify="center"></Grid>
+    <Grid item container direction="column" spacing={2}>
+      {iconBlock}
+      <Grid item container justify="center">
+        <Typography variant="h1">{t(title)}</Typography>
+      </Grid>
     </Grid>
   );
 };
