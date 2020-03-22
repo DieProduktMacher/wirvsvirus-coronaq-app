@@ -14,7 +14,8 @@ const styles = (theme: Theme) =>
       backgroundColor: "#BEB3AA",
       border: "3px solid #DDD2CA",
       borderRadius: "50%",
-      padding: "8px"
+      padding: "8px",
+      marginTop: "6px"
     }
   });
 

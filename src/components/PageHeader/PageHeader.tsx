@@ -7,10 +7,17 @@ import {
   withStyles,
   LinearProgress
 } from "@material-ui/core";
+
+import { GpsFixed } from "@material-ui/icons";
 import { useAppState } from "../App/State";
 
 const styles = (theme: Theme) =>
   createStyles({
+    locationIcon: {
+      color: "#CCCCCC",
+      marginTop: "6px"
+    },
+    location: { height: "100%", margin: 0 },
     logo: {
       height: "64px",
       padding: "8px 24px"
@@ -33,9 +40,22 @@ const PageHeader: FunctionComponent<WithStyles<typeof styles>> = ({
                 className={classes.logo}
               />
             </Grid>
-            <Grid item>
-              {state.location ? state.location.formatted_address : ""}
-            </Grid>
+            {state.location && (
+              <Grid item>
+                <Grid
+                  container
+                  direction="row"
+                  alignItems="center"
+                  spacing={2}
+                  className={classes.location}
+                >
+                  <Grid item>
+                    <GpsFixed className={classes.locationIcon} />
+                  </Grid>
+                  <Grid item>{state.location.formatted_address}</Grid>
+                </Grid>
+              </Grid>
+            )}
           </Grid>
         </Grid>
         <Grid item>
