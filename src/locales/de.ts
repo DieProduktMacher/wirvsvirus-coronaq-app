@@ -40,6 +40,9 @@ export const de = {
           "Du kannst jetzt einfach deine Frage bei deiner zuständigen Behörde einsenden und erhältst die Antwort direkt per E-Mail."
       },
       related_headline: "Diese Fragen könnten dich auch interessieren:"
+    },
+    create_question: {
+      next: 'Frage einsenden'
     }
   }
 };
