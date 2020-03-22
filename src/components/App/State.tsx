@@ -7,8 +7,7 @@ import React, {
   useMemo
 } from "react";
 import { googleMapsGeocodeEntry } from "../models/map";
-
-const NUMBER_OF_STEPS = 5;
+import { stepsCount } from "./Routes";
 
 interface State {
   location: googleMapsGeocodeEntry | null;
@@ -55,7 +54,7 @@ const reducer = (state: State, action: Action) => {
     case "setStep":
       return {
         ...state,
-        progress: Math.ceil((100 * action.step) / NUMBER_OF_STEPS)
+        progress: Math.ceil((100 * action.step) / stepsCount)
       };
     default:
       return state;

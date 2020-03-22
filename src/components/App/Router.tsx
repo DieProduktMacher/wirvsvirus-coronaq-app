@@ -1,14 +1,14 @@
 import React from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
-import routes, { root } from "./Routes";
+import { Route, Switch } from "react-router-dom";
+import { root, steps } from "./Routes";
 
 const Router = () => {
   return (
     <Switch>
-      <Redirect exact from="/" to={root.path} />
-      {routes.map(({ path, component }) => (
+      {steps.map(({ path, component }) => (
         <Route path={path} component={component} key={path} />
       ))}
+      <Route path="/" component={root.component} />
     </Switch>
   );
 };
