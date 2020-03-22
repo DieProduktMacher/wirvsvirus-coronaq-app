@@ -91,6 +91,10 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
     state.question && setQuestion(state.question);
   }, [state.question]);
 
+  useEffect(() => {
+    state.answers && setAnswers(state.answers);
+  }, [state.answers]);
+
   const onFacebook = () => {
     const shareUrl = "https://www.facebook.com/sharer/sharer.php?u=" + window.location.href;
     const win = window.open(
