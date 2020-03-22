@@ -54,7 +54,7 @@ const QuestionSlider: FunctionComponent<sliderProps> = ({
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev"
     },
-    spaceBetween: 0,
+    spaceBetween: 10,
     breakpoints: {
       480: {
         slidesPerView: 2,
@@ -78,8 +78,8 @@ const QuestionSlider: FunctionComponent<sliderProps> = ({
     >
       <Swiper {...params}>
         {questions.map((question, index) => (
-          <div>
-            <QuestionSliderCard key={index} text={question} />
+          <div key={index}>
+            <QuestionSliderCard text={question} />
           </div>
         ))}
       </Swiper>

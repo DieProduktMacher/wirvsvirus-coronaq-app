@@ -9,6 +9,25 @@ h1 em {
 .swiper-container {
   padding: 0 4em !important;
 }
+
+.swiper-button-prev,
+.swiper-button-next {
+  background: white;
+  height: 100% !important;
+  top: 0 !important;
+  margin: 0 !important;
+  padding: 0 16px;
+  outline: none;
+}
+
+.swiper-button-prev {
+  left: 0 !important;
+}
+
+.swiper-button-next {
+  right: 0 !important;
+}
+
 .swiper-button-prev:after,
 .swiper-button-next:after {
   color: #979797;
