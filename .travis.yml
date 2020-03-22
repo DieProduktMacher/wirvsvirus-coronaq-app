@@ -9,4 +9,5 @@ env:
 script:
 - npm install -g npm firebase-tools
 - yarn install
+- yarn build
 - firebase deploy
