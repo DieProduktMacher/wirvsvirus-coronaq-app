@@ -37,6 +37,7 @@ export const FunctionalAutocomplete = withStyles(styles)(
     const [state, actions] = useAppState();
     const firebase = useContext(FirebaseContext);
     const { t } = useTranslation();
+    const [blockSearch, setBlockSearch] = useState(false);
 
     const [previousQuestions, setPreviousQuestions] = useState<
       Array<AutosuggestSearchResult>
@@ -78,8 +79,6 @@ export const FunctionalAutocomplete = withStyles(styles)(
           .doc(suggestedQuestion.id)
           .get()
           .then(querySnapshot => {
-            console.log("querySnapshot", querySnapshot.data());
-
             const searchResultArray = [
               {
                 data: querySnapshot.data(),
@@ -143,6 +142,7 @@ export const FunctionalAutocomplete = withStyles(styles)(
             variant="outlined"
             value={"test"}
             onChange={event => {
+              setBlockSearch(false);
               setQuestion(event.target.value);
               getRelatedQuestions(event.target.value);
             }}
@@ -154,10 +154,13 @@ export const FunctionalAutocomplete = withStyles(styles)(
           );
 
           getExistingQuestion(matchingQuestions[0]);
+          setBlockSearch(true);
         }}
         onBlur={(event: any) => {
-          actions.setQuestion(event.target.value);
-          getCustomQuestion(event.target.value);
+          if (!blockSearch) {
+            actions.setQuestion(event.target.value);
+            getCustomQuestion(event.target.value);
+          }
         }}
       />
     );
