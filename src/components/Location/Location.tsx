@@ -24,7 +24,7 @@ import axios, { AxiosResponse } from "axios";
 import { useTranslation } from "react-i18next";
 import { useAppState } from "../App/State";
 import routes from "../App/Routes";
-import NavigationButtons from "../NavigationButton/NavigationButtons";
+import StepNavigation from "../StepNavigation/StepNavigation";
 
 const styles = () =>
   createStyles({
@@ -133,8 +133,12 @@ const Location: FunctionComponent<WithStyles<typeof styles>> = ({
             </Button>
           </Grid>
         </Grid>
-        <NavigationButtons
-          next={{ route: routes.question, title: "location:next" }}
+        <StepNavigation
+          next={{
+            route: routes.question,
+            title: "location:next",
+            disabled: !state.location
+          }}
         />
       </Grid>
     </section>

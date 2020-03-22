@@ -12,13 +12,12 @@ import {
   Typography,
   createStyles,
   withStyles,
-  WithStyles,
-  Button
+  WithStyles
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useTranslation } from "react-i18next";
 import { Context as FirebaseContext } from "../../services/Firebase";
-import NavigationButtons from "../NavigationButton/NavigationButtons";
+import StepNavigation from "../StepNavigation/StepNavigation";
 import routes from "../App/Routes";
 
 const styles = () =>
@@ -99,8 +98,12 @@ const Question: FunctionComponent<WithStyles<typeof styles>> = ({
               }}
             />
           </Grid>
-          <NavigationButtons
-            next={{ route: routes.answer, title: "question:next" }}
+          <StepNavigation
+            next={{
+              route: routes.answer,
+              title: "question:next",
+              disabled: !question
+            }}
           />
         </Grid>
       </Grid>

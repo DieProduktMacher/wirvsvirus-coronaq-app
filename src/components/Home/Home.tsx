@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Grid, Typography } from "@material-ui/core";
 import { useAppState } from "../App/State";
-import NavigationButtons from "../NavigationButton/NavigationButtons";
+import StepNavigation from "../StepNavigation/StepNavigation";
 import routes from "../App/Routes";
 
 export const Home = () => {
@@ -35,7 +35,7 @@ export const Home = () => {
             <li>{t("home:list:get_answer")}</li>
           </ul>
         </Grid>
-        <NavigationButtons
+        <StepNavigation
           isStart={true}
           next={{ route: routes.location, title: "home:next" }}
         />
