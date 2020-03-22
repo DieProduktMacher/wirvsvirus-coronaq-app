@@ -2,8 +2,8 @@ import React, {
   FunctionComponent,
   useEffect,
   useState,
-  ChangeEvent
-  // useContext
+  ChangeEvent,
+  useContext
 } from "react";
 import { useAppState } from "../App/State";
 import {
@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useTranslation } from "react-i18next";
-// import { Context as FirebaseContext } from "../../services/Firebase";
+import { Context as FirebaseContext } from "../../services/Firebase";
 import StepNavigation from "../StepNavigation/StepNavigation";
 import routes from "../App/Routes";
 import StepHeader from "../StepHeader/StepHeader";
@@ -33,10 +33,10 @@ const Question: FunctionComponent<WithStyles<typeof styles>> = ({
   classes
 }) => {
   const [, actions] = useAppState();
-  // const firebase = useContext(FirebaseContext);
+  const firebase = useContext(FirebaseContext);
   const { t } = useTranslation();
 
-  const [previousQuestions] = useState<Array<any>>([]);
+  const [previousQuestions, setPreviousQuestions] = useState<Array<any>>([]);
   const [question, setQuestion] = useState<string>("");
 
   useEffect(() => {
@@ -47,16 +47,20 @@ const Question: FunctionComponent<WithStyles<typeof styles>> = ({
     setQuestion(statedQuestion);
 
     if (statedQuestion.length > 3) {
-      // firebase?.firestore
-      //   .collection("questions")
-      //   .where("countryCode", "==", "de")
-      //   .get()
-      //   .then((result: any) => {
-      //     const questions = result.docs.map(
-      //       (doc: any) => doc.data().question.de
-      //     );
-      //     setPreviousQuestions(questions);
-      //   });
+      let suggestFunction = firebase?.functions.httpsCallable('autoQuestionSuggest');
+      if (suggestFunction) {
+        suggestFunction({
+          terms: statedQuestion
+        })
+          .then((value: firebase.functions.HttpsCallableResult) => {
+            let questions = value.data.hits.hits.map((hit: any) => {
+              return hit._source.question['de'];
+            });
+
+            setPreviousQuestions(questions);
+          })
+          .catch(console.error);
+      }
     }
   };
 

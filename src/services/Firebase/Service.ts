@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/functions";
 
 const CONFIG = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,8 +15,11 @@ const CONFIG = {
 
 export class Service {
   firestore: firebase.firestore.Firestore;
+  functions: firebase.functions.Functions;
+
   constructor() {
     firebase.initializeApp(CONFIG);
     this.firestore = firebase.firestore();
+    this.functions = firebase.functions();
   }
 }
