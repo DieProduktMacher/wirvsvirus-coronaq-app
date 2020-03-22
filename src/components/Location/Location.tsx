@@ -18,7 +18,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import {
   googleMapsGeocodeResponse,
   googleMapsGeocodeEntry
-} from "../models/map";
+} from "../../models/map";
 
 import axios, { AxiosResponse } from "axios";
 import { useTranslation } from "react-i18next";

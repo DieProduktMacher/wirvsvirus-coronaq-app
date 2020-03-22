@@ -19,6 +19,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useTranslation } from "react-i18next";
 import { Context as FirebaseContext } from "../../services/Firebase";
 import { useHistory } from "react-router-dom";
+import QuestionSlider from "../QuestionSlider/QuestionSlider";
 
 const styles = () =>
   createStyles({
@@ -30,12 +31,12 @@ const styles = () =>
 const Question: FunctionComponent<WithStyles<typeof styles>> = ({
   classes
 }) => {
-  const [state, actions] = useAppState();
-  const firebase = useContext(FirebaseContext);
+  const [, actions] = useAppState();
+  // const firebase = useContext(FirebaseContext);
   const history = useHistory();
   const { t } = useTranslation();
 
-  const [previousQuestions, setPreviousQuestions] = useState<Array<any>>([]);
+  const [previousQuestions] = useState<Array<any>>([]);
   const [question, setQuestion] = useState<string>("");
 
   useEffect(() => {
@@ -63,15 +64,19 @@ const Question: FunctionComponent<WithStyles<typeof styles>> = ({
     console.log(previousQuestions);
   }, [previousQuestions]);
 
+  // remove me
+  const popularQuestions = [
+    "Ab wann gilt die Ausgangssperre in Bayern?",
+    "Ab wann darf ich wieder normal nach draußen gehen?",
+    "Ab wann darf ich wieder normal nach draußen gehen?",
+    "Ab wann gilt die Ausgangssperre in Bayern?",
+    "Ab wann darf ich wieder normal nach draußen gehen?",
+    "Ab wann darf ich wieder normal nach draußen gehen?"
+  ];
+
   return (
     <section>
-      <Grid
-        className="full-height"
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-      >
+      <Grid container direction="row" justify="center" alignItems="center">
         <Grid container direction="column" spacing={5}>
           <Grid item container justify="center">
             <Typography variant="h1">{t("question:headline")}</Typography>
@@ -107,6 +112,10 @@ const Question: FunctionComponent<WithStyles<typeof styles>> = ({
             >
               {t("next")}
             </Button>
+          </Grid>
+          <Grid item container justify="center">
+            <Typography>{t("question:popular_headline")}</Typography>
+            <QuestionSlider questions={popularQuestions} />
           </Grid>
         </Grid>
       </Grid>

@@ -5,3 +5,15 @@ h1 em {
   font-style: normal;
   font-weight: 300;
 }
+
+.swiper-container {
+  padding: 0 4em !important;
+}
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  color: #979797;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #979797 !important;
+}

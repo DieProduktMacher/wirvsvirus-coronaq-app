@@ -22,7 +22,11 @@ export const de = {
     },
     question: {
       headline: "Frage stellen",
-      input_question: "Was interessiert dich"
+      input_question: "Was interessiert dich",
+      popular_headline: "In Bayern wird aktuell häufig gesucht:"
+    },
+    answer: {
+      related_headline: "Diese Fragen könnten dich auch interessieren:"
     }
   }
 };

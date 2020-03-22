@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/App/App";
 import * as serviceWorker from "./serviceWorker";
+import "swiper/css/swiper.min.css";
+// import "react-id-swiper/lib/;
 
 import "./i18n";
 import * as Firebase from "./services/Firebase";

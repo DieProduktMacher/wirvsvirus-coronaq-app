@@ -6,7 +6,7 @@ import React, {
   useState,
   useMemo
 } from "react";
-import { googleMapsGeocodeEntry } from "../models/map";
+import { googleMapsGeocodeEntry } from "../../models/map";
 import { stepsCount } from "./Routes";
 
 interface State {
