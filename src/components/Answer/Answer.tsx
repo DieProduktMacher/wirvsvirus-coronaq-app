@@ -207,7 +207,7 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
                   spacing={4}
                 >
                   <Grid item container>
-                    <Typography variant={"h1"}>
+                    <Typography variant={"h3"}>
                       {answers.length > 0
                         ? answers[0].data.question.de
                         : t("answer:main:fallback:headline")}

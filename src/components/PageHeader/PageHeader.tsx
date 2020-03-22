@@ -21,7 +21,7 @@ const styles = (theme: Theme) =>
     location: { height: "100%", margin: 0 },
     logo: {
       height: "64px",
-      padding: "8px 24px",
+      padding: "8px 48px",
       cursor: "pointer"
     }
   });
