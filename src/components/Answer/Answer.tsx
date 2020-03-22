@@ -16,41 +16,38 @@ import {
   Card,
   CardContent,
   CardActions,
-  Button,
   IconButton,
-  Divider
+  Divider,
+  Link
 } from "@material-ui/core";
 import QuestionSlider from "../QuestionSlider/QuestionSlider";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Share } from "@material-ui/icons";
 import StepNavigation from "../StepNavigation/StepNavigation";
 import routes from "../App/Routes";
+import { SearchQueryResult } from "../../models/question";
 
 const styles = () =>
   createStyles({
     searchlocation: {
       minWidth: "300px"
     },
-    actions: {
-      // display: 'flex',
-      // justifyContent: 'space'
+    virus: {
+      marginRight: "1em"
     }
   });
 
-// remove me
 const relatedQuestions = [
-  "Ab wann gilt die Ausgangssperre in Bayern?",
-  "Ab wann darf ich wieder normal nach draußen gehen?",
-  "Ab wann darf ich wieder normal nach draußen gehen?",
-  "Ab wann gilt die Ausgangssperre in Bayern?",
-  "Ab wann darf ich wieder normal nach draußen gehen?",
-  "Ab wann darf ich wieder normal nach draußen gehen?"
+  "Darf ich zu Freunden nach Hause?",
+  "Darf ich meine Eltern besuchen??",
+  "Darf ich meinen Partner sehen??"
 ];
 
 const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
   const [state, actions] = useAppState();
   const { t } = useTranslation();
   const [question, setQuestion] = useState<string>("");
+  const [answers, setAnswers] = useState<Array<SearchQueryResult>>([]);
 
   useEffect(() => {
     actions.setStep(3);
@@ -61,8 +58,9 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
   }, [state.question]);
 
   useEffect(() => {
-    console.log(state.answers);
+    state.answers && setAnswers(state.answers);
   }, [state.answers]);
+
   return (
     <section>
       <Grid
@@ -99,38 +97,62 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
         <Grid item container justify="center">
           <Card>
             <CardContent>
-              <Grid container direction="column" spacing={4}>
-                <Grid item container justify={"space-between"}>
-                  <Typography variant={"subtitle2"}>
-                    Aktuellste Meldung
-                  </Typography>
-                  <Typography variant="caption">
-                    Stand: 21. März 2020, 16:03 Uhr | Gültig bis: 30. März 2020,
-                    00:00 Uhr{" "}
-                  </Typography>
-                </Grid>
-                <Grid item container justify={"center"}>
-                  <Typography variant={"h1"}>{question}</Typography>
-                </Grid>
-                <Grid item>
-                  <Divider />
-                </Grid>
+              <Grid container justify={"center"} spacing={4}>
                 <Grid item container>
-                  <Typography variant={"body1"}>
-                    Nein, das ist leider derzeit nicht möglich. Sport, Spazieren
-                    gehen und Bewegung an der frischen Luft sind gestattet.
-                    Allerdings ausschließlich alleine oder mit Angehörigen des
-                    eigenen Hausstandes und ohne jede sonstige Gruppenbildung.
+                  <img
+                    src="/assets/virus.svg"
+                    alt="CoronAQ"
+                    className={classes.virus}
+                  />
+                  <Typography variant={"subtitle1"}>
+                    {t("answer:main:notification")}
                   </Typography>
+                  {answers.length > 0 && (
+                    <Typography variant="caption">
+                      {answers[0].data.answeredAt &&
+                        `${t("answer:main:answeredAt")}: ${
+                          answers[0].data.answeredAt
+                        } |`}
+                      {answers[0].data.validTo &&
+                        `${t("answer:main:validTo")}: ${
+                          answers[0].data.validTo
+                        }`}
+                    </Typography>
+                  )}
+                </Grid>
+                <Grid container xs={12} md={10} direction="column" spacing={4}>
+                  <Grid item container>
+                    <Typography variant={"h1"}>
+                      {answers.length > 0 && answers[0].data.question.de}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Divider />
+                  </Grid>
+                  <Grid item container>
+                    <Typography variant={"body1"}>
+                      {answers.length > 0 && answers[0].data.answer.de}
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Grid>
             </CardContent>
-            <CardActions className={classes.actions}>
+            <CardActions>
               <Grid item container justify={"space-between"}>
-                <Button>Meldung vom 18. März 2020</Button>
+                {answers.length > 0 && answers[0].data.authoredAt ? (
+                  <Typography>
+                    {t("answer:main:authoredAt")} {answers[0].data.authoredAt}
+                  </Typography>
+                ) : (
+                  <div></div>
+                )}
                 <div>
                   <Typography variant={"caption"}>
-                    Quelle: Bundesministerium für Gesundheit
+                    {answers.length > 0 && (
+                      <Link href={answers[0].data.sourceUrl}>
+                        {answers[0].data.sourceTitle}
+                      </Link>
+                    )}
                   </Typography>
                   <IconButton color="primary">
                     <Share />
@@ -145,7 +167,13 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
           <Typography variant={"subtitle1"}>
             {t("answer:related_headline")}
           </Typography>
-          <QuestionSlider questions={relatedQuestions} />
+          <QuestionSlider
+            questions={
+              answers.length > 1
+                ? answers.slice(0, 9).map(answer => answer.data.question.de)
+                : relatedQuestions
+            }
+          />
         </Grid>
 
         <Grid item container justify="center" spacing={3}>

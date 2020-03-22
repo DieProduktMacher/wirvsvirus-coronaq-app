@@ -28,6 +28,12 @@ export const de = {
       submit_question: "Frage einsenden"
     },
     answer: {
+      main: {
+        notification: "Aktuellste Meldung",
+        answeredAt: "Stand",
+        validTo: "Gültig Bis",
+        authoredAt: "Meldung vom"
+      },
       fallback: {
         headline: "Keine passende Antwort dabei?",
         body:

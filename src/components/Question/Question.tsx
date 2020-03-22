@@ -139,41 +139,45 @@ const Question: FunctionComponent<WithStyles<typeof styles>> = ({
     "Ab wann darf ich wieder normal nach draußen gehen?"
   ];
 
+  const autocomplete = (
+    <Autocomplete
+      className={classes.searchlocation}
+      freeSolo
+      value={question}
+      options={previousQuestions.map(question => question.question)}
+      renderInput={params => (
+        <TextField
+          {...params}
+          label={t("question:input_question")}
+          variant="outlined"
+          value={"test"}
+          onChange={event => {
+            setQuestion(event.target.value);
+            getRelatedQuestions(event.target.value);
+          }}
+        />
+      )}
+      onChange={(event: any, value: any) => {
+        const matchingQuestions = previousQuestions.filter(
+          previousQuestion => previousQuestion.question === value
+        );
+
+        getExistingQuestion(matchingQuestions[0]);
+      }}
+      onBlur={(event: any) => {
+        actions.setQuestion(event.target.value);
+        getCustomQuestion(event.target.value);
+      }}
+    />
+  );
+
   return (
     <section>
       <Grid container direction="row" justify="center" alignItems="center">
         <Grid container direction="column" spacing={5}>
           <StepHeader headline="question:headline" icon="textsms" />
           <Grid item container justify="center">
-            <Autocomplete
-              className={classes.searchlocation}
-              freeSolo
-              value={question}
-              options={previousQuestions.map(question => question.question)}
-              renderInput={params => (
-                <TextField
-                  {...params}
-                  label={t("question:input_question")}
-                  variant="outlined"
-                  value={"test"}
-                  onChange={event => {
-                    setQuestion(event.target.value);
-                    getRelatedQuestions(event.target.value);
-                  }}
-                />
-              )}
-              onChange={(event: any, value: any) => {
-                const matchingQuestions = previousQuestions.filter(
-                  previousQuestion => previousQuestion.question === value
-                );
-
-                getExistingQuestion(matchingQuestions[0]);
-              }}
-              onBlur={(event: any) => {
-                actions.setQuestion(event.target.value);
-                getCustomQuestion(event.target.value);
-              }}
-            />
+            {autocomplete}
           </Grid>
           <StepNavigation
             next={{
