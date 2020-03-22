@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
+import Route from "../App/Route";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -27,7 +28,7 @@ interface Props extends WithStyles<typeof styles> {
   isStart?: boolean;
   next: {
     title: string;
-    path: string;
+    route: Route;
   };
 }
 
@@ -46,7 +47,7 @@ const NavigationButtons: FunctionComponent<Props> = ({
           variant="contained"
           color="primary"
           className={[classes.pill, classes.cta].join(" ")}
-          onClick={() => history.push(next.path)}
+          onClick={() => history.push(next.route.path)}
           disableElevation
         >
           {t(next.title)}

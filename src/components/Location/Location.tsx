@@ -28,6 +28,12 @@ import NavigationButtons from "../NavigationButton/NavigationButtons";
 
 const styles = () =>
   createStyles({
+    pill: {
+      borderRadius: "20px",
+      paddingLeft: "24px",
+      paddingRight: "24px",
+      minWidth: "192px"
+    },
     searchlocation: {
       minWidth: "300px"
     }
@@ -119,6 +125,7 @@ const Location: FunctionComponent<WithStyles<typeof styles>> = ({
           <Grid item container justify="center">
             <Button
               color="primary"
+              className={classes.pill}
               onClick={getGeolocation}
               startIcon={<Icon>gps_fixed</Icon>}
             >
@@ -127,7 +134,7 @@ const Location: FunctionComponent<WithStyles<typeof styles>> = ({
           </Grid>
         </Grid>
         <NavigationButtons
-          next={{ path: routes.question.path, title: "location:next" }}
+          next={{ route: routes.question, title: "location:next" }}
         />
       </Grid>
     </section>

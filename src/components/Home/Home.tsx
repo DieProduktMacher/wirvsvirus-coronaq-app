@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { useAppState } from "../App/State";
-import { useHistory } from "react-router-dom";
 import NavigationButtons from "../NavigationButton/NavigationButtons";
 import routes from "../App/Routes";
 
@@ -14,12 +13,6 @@ export const Home = () => {
   useEffect(() => {
     actions.setStep(0);
   }, [actions]);
-
-  const history = useHistory();
-
-  const nextStep = () => {
-    history.push("/location");
-  };
 
   return (
     <section>
@@ -44,7 +37,7 @@ export const Home = () => {
         </Grid>
         <NavigationButtons
           isStart={true}
-          next={{ path: routes.location.path, title: "home:start" }}
+          next={{ route: routes.location, title: "home:start" }}
         />
       </Grid>
     </section>
