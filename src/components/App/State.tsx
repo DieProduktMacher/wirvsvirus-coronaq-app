@@ -8,30 +8,35 @@ import React, {
 } from "react";
 import { googleMapsGeocodeEntry } from "../../models/map";
 import { stepsCount } from "./Routes";
+import { SearchQueryResult } from "../../models/question";
 
 interface State {
   location: googleMapsGeocodeEntry | null;
   progress: number;
   question: string | null;
+  answers: Array<SearchQueryResult> | null;
 }
 
 const initialState: State = {
   location: null,
   progress: 0,
-  question: null
+  question: null,
+  answers: null
 };
 
 type Action =
   | { type: "setLocation"; location: googleMapsGeocodeEntry }
   | { type: "resetLocation" }
   | { type: "setStep"; step: number }
-  | { type: "setQuestion"; question: string };
+  | { type: "setQuestion"; question: string }
+  | { type: "setAnswers"; answers: Array<SearchQueryResult> };
 
 interface actions {
   setLocation: (location: googleMapsGeocodeEntry) => void;
   resetLocation: () => void;
   setStep: (step: number) => void;
   setQuestion: (question: string) => void;
+  setAnswers: (answers: Array<SearchQueryResult>) => void;
 }
 
 const StateContext = createContext<[State, actions]>([
@@ -40,7 +45,8 @@ const StateContext = createContext<[State, actions]>([
     setLocation: location => {},
     resetLocation: () => {},
     setStep: step => {},
-    setQuestion: string => {}
+    setQuestion: string => {},
+    setAnswers: answers => {}
   }
 ]);
 
@@ -65,6 +71,11 @@ const reducer = (state: State, action: Action) => {
       return {
         ...state,
         question: action.question
+      };
+    case "setAnswers":
+      return {
+        ...state,
+        answers: action.answers
       };
     default:
       return state;
@@ -91,6 +102,16 @@ export const StateProvider: React.ComponentType = ({ children }) => {
       setQuestion: (question: string) => {
         localStorage.setItem("question", JSON.stringify(question));
         dispatch({ type: "setQuestion", question });
+      },
+      setAnswers: (answers: Array<SearchQueryResult>) => {
+        if (answers && answers.length > 0) {
+          try {
+            localStorage.setItem("answers", JSON.stringify(answers));
+          } catch (error) {
+            console.error(error);
+          }
+          dispatch({ type: "setAnswers", answers });
+        }
       }
     };
   }, [dispatch]);
@@ -108,9 +129,18 @@ export const StateProvider: React.ComponentType = ({ children }) => {
 
       const question = localStorage.getItem("question");
       if (question && question !== "undefined") {
+        console.log("setquestion", question);
         dispatch({
           type: "setQuestion",
           question: JSON.parse(question)
+        });
+      }
+
+      const answers = localStorage.getItem("answers");
+      if (answers && answers !== "undefined") {
+        dispatch({
+          type: "setAnswers",
+          answers: JSON.parse(answers)
         });
       }
 

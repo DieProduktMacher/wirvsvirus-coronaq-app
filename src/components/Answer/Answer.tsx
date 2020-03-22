@@ -60,6 +60,9 @@ const Answer: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
     state.question && setQuestion(state.question);
   }, [state.question]);
 
+  useEffect(() => {
+    console.log(state.answers);
+  }, [state.answers]);
   return (
     <section>
       <Grid

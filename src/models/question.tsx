@@ -26,7 +26,12 @@ export interface SearchQueryResult {
   meta: {
     score: number;
   };
-  ref: string;
+  ref?: string;
+}
+
+export interface AutosuggestSearchResult {
+  question: string;
+  id: string;
 }
 
 export interface SearchQuery {
