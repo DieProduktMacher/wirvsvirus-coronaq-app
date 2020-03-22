@@ -5,7 +5,7 @@ export const de = {
     home: {
       headline: "Willkommen bei {{brand}}",
       intro:
-        "Sinn und Zweck der Platform Lorem ipsum dolor sit amet zweite Zeile Sinn und Zweck der Platform Lorem ipsum dolor sit amet",
+        "Die offizielle Sammlung aller rechtlichen Regelungen und relevanten Informationen für deine Region.",
       how_it_works: "So funktionierts's",
       list: {
         select_region: "Region festlegen",

@@ -17,6 +17,18 @@ const styles = () =>
     stepsList: {
       listStyleType: "none",
       paddingInlineStart: "0px"
+    },
+    logo: {
+      height: "32px",
+      padding: "4px 24px"
+    },
+    intro: {
+      fontSize: "24px",
+      textAlign: "center",
+      maxWidth: "876px"
+    },
+    section: {
+      background: "url('/assets/homebg.png')"
     }
   });
 
@@ -30,7 +42,7 @@ const Home: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
   }, [actions]);
 
   return (
-    <section>
+    <section className={classes.section}>
       <Grid container direction="column" spacing={5}>
         <Grid item container justify="center">
           <Typography variant="h1">
@@ -38,7 +50,9 @@ const Home: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
           </Typography>
         </Grid>
         <Grid item container justify="center">
-          <Typography variant="body1">{t("home:intro")}</Typography>
+          <Typography variant="body1" className={classes.intro}>
+            {t("home:intro")}
+          </Typography>
         </Grid>
         <Grid item container justify="center">
           <Typography variant="subtitle1">{t("home:how_it_works")}</Typography>
@@ -76,6 +90,17 @@ const Home: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
               </Grid>
             </li>
           </ul>
+        </Grid>
+        <Grid item container justify="flex-end">
+          <Grid item>
+            <a href="https://wirvsvirushackathon.org/">
+              <img
+                src="https://wirvsvirushackathon.org/wp-content/uploads/2020/03/12-scaled.jpg"
+                alt="Initiiert durch WirVsVirus"
+                className={classes.logo}
+              />
+            </a>
+          </Grid>
         </Grid>
         <StepNavigation
           isStart={true}

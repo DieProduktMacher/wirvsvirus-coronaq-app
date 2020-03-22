@@ -13,18 +13,7 @@ import PageFooter from "../PageFooter/PageFooter";
 
 import { createStyles, withStyles, WithStyles } from "@material-ui/core";
 
-const styles = () =>
-  createStyles({
-    container: {
-      width: "100%",
-      display: "flex",
-      justifyContent: "center"
-    },
-    wrapper: {
-      maxWidth: "1000px",
-      width: "100%"
-    }
-  });
+const styles = () => createStyles({});
 
 const App: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
   return (
@@ -32,11 +21,7 @@ const App: FunctionComponent<WithStyles<typeof styles>> = ({ classes }) => {
       <StateProvider>
         <BrowserRouter>
           <PageHeader />
-          <div className={classes.container}>
-            <div className={classes.wrapper}>
-              <PageMain />
-            </div>
-          </div>
+          <PageMain />
           <PageFooter />
         </BrowserRouter>
       </StateProvider>

@@ -125,7 +125,7 @@ const CreateQuestion: FunctionComponent<WithStyles<typeof styles>> = ({
             <CardContent>
               <Grid container direction="column" spacing={4}>
                 <Grid item container justify={"center"}>
-                  <Typography variant={"h1"}>Frage einsenden</Typography>
+                  <Typography variant={"h3"}>Frage einsenden</Typography>
                 </Grid>
                 <Grid item>
                   <Divider />

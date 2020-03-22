@@ -113,11 +113,11 @@ const typography = {
   htmlFontSize: 16,
   fontSize: 16,
   body1: {
-    fontSize: 16,
+    fontSize: 18,
     lineHeight: 1.33
   },
   body2: {
-    fontSize: 14,
+    fontSize: 12,
     lineHeight: 1.33
   },
   h1: {
@@ -128,22 +128,22 @@ const typography = {
   },
   h2: {
     fontFamily: ['"Oxygen"', "Helvetica", "Roboto", "sans-serif"].join(","),
-    fontSize: 32,
+    fontSize: 36,
+    fontWeight: 700,
     lineHeight: 1.33
   },
   h3: {
     fontFamily: ['"Oxygen"', "Helvetica", "Roboto", "sans-serif"].join(","),
-    fontSize: 24,
+    fontSize: 30,
+    fontWeight: 700,
     lineHeight: 1.33
   },
   h4: {
-    fontFamily: ['"Oxygen"', "Helvetica", "Roboto", "sans-serif"].join(","),
     fontSize: 18,
     fontWeight: 700,
     lineHeight: 1.33
   },
   h5: {
-    fontFamily: ['"Oxygen"', "Helvetica", "Roboto", "sans-serif"].join(","),
     fontSize: 16,
     fontWeight: 700,
     lineHeight: 1.33
