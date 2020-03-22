@@ -24,9 +24,15 @@ export const de = {
       headline: "Frage stellen",
       input_question: "Was interessiert dich",
       next: "Absenden",
-      popular_headline: "In Bayern wird aktuell häufig gesucht:"
+      popular_headline: "In Bayern wird aktuell häufig gesucht:",
+      submit_question: "Frage einsenden"
     },
     answer: {
+      fallback: {
+        headline: "Keine passende Antwort dabei?",
+        body:
+          "Du kannst jetzt einfach deine Frage bei deiner zuständigen Behörde einsenden und erhältst die Antwort direkt per E-Mail."
+      },
       related_headline: "Diese Fragen könnten dich auch interessieren:"
     }
   }
