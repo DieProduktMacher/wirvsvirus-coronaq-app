@@ -10,7 +10,7 @@ export const de = {
       list: {
         select_region: "Region festlegen",
         pose_question: "Frage stellen",
-        get_answer: "Geprüfte Frage erhalten"
+        get_answer: "Geprüfte Antwort erhalten"
       },
       next: "Los geht's"
     },
