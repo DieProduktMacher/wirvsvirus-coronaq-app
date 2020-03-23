@@ -1,13 +1,12 @@
 language: node_js
 node_js:
-- 10
+  - 10
 branches:
   only:
-  - master
+    - master
 env:
   - NODE_ENV=development
 script:
-- npm install -g npm firebase-tools
-- yarn install
-- yarn build
-- firebase deploy
+  - yarn install
+  - yarn build
+  - yarn deploy
