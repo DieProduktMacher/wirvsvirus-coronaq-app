@@ -37,7 +37,7 @@
     "react-i18next": "^11.3.4",
     "react-id-swiper": "^3.0.0",
     "react-router-dom": "^5.1.2",
-    "swiper": "^5.3.6"
+    "swiper": "^6.5.1"
   },
   "devDependencies": {
     "@material-ui/styles": "^4.9.6",
